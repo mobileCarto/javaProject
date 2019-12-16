@@ -54,7 +54,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mGoogleMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        CameraPosition Liberty = CameraPosition.builder().target(new LatLng(40.68, -74.04)).zoom(16).bearing(0).tilt(0).build();
+        CameraPosition Liberty = CameraPosition.builder().target(new LatLng(40.68, -74.04)).zoom(14).bearing(0).tilt(0).build();
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
     }
 }
