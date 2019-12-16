@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MobileCartoApp</string>
+    <string name="navigation_drawer_open">Open Nav Drawer</string>
+    <string name="navigation_drawer_close">Close Nav Drawer</string>
 </resources>
