@@ -23,39 +23,38 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     GoogleMap mGoogleMap;
     MapView mMapView;
     View mView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+        super.onCreate(savedInstanceState); }
+        @Nullable
+        @Override
+        public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup
+        container, @Nullable Bundle savedInstanceState){
+            mView = inflater.inflate(R.layout.fragment_map, container, false);
+            return mView;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_map, container, false);
-        return mView;
+        }
 
-    }
+        @Override
+        public void onViewCreated (View view, @Nullable Bundle savedInstanceState){
+            super.onViewCreated(view, savedInstanceState);
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+            mMapView = (MapView) mView.findViewById(R.id.map);
+            if (mMapView != null) {
+                mMapView.onCreate(null);
+                mMapView.onResume();
+                mMapView.getMapAsync(this);
+            }
+        }
 
-        mMapView = (MapView) mView.findViewById(R.id.map);
-        if (mMapView != null) {
-            mMapView.onCreate(null);
-            mMapView.onResume();
-            mMapView.getMapAsync(this);
+        @Override
+        public void onMapReady (GoogleMap googleMap){
+            MapsInitializer.initialize(getContext());
+            mGoogleMap = googleMap;
+            googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+            CameraPosition Liberty = CameraPosition.builder().target(new LatLng(40.68, -74.04)).zoom(14).bearing(0).tilt(0).build();
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
         }
     }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        MapsInitializer.initialize(getContext());
-        mGoogleMap = googleMap;
-        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        CameraPosition Liberty = CameraPosition.builder().target(new LatLng(40.68, -74.04)).zoom(14).bearing(0).tilt(0).build();
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
-    }
-}
-
