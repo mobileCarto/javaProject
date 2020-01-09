@@ -2,4 +2,8 @@
     <string name="app_name">MobileCartoApp</string>
     <string name="navigation_drawer_open">Open Nav Drawer</string>
     <string name="navigation_drawer_close">Close Nav Drawer</string>
+    <string name="ID">ID</string>
+    <string name="Time">Time</string>
+    <string name="Latitude">Latitude</string>
+    <string name="Longitude">Longitude</string>
 </resources>
