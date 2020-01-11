@@ -22,7 +22,7 @@
             android:background="@color/colorPrimary"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
         <TextView
             android:id="@+id/tv1"
@@ -48,6 +48,7 @@
             android:layout_height="match_parent" />
 
 
+
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -58,10 +59,7 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"/>
 
-</androidx.drawerlayout.widget.DrawerLayout>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 
-    <!--  <com.mapbox.mapboxsdk.maps.MapView
-          android:id="@+id/mapView"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent" /> -->
