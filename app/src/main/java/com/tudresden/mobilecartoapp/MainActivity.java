@@ -127,14 +127,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /*
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+   public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 10, locationListener);
         } else {
             Toast.makeText(this, "Location cannot be obtained due to missing permission.", Toast.LENGTH_LONG).show();
         }
-    }
+    } */
 
 }
 
