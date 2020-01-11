@@ -6,5 +6,7 @@
     <string name="Time">Time</string>
     <string name="Latitude">Latitude</string>
     <string name="Longitude">Longitude</string>
-
+    <string name="Map">Map</string>
+    <string name="History">History</string>
+    <string name="About">About</string>
 </resources>
