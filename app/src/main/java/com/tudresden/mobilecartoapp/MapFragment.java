@@ -44,8 +44,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +83,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-               getUserLocation(location, "your location");
+                getUserLocation(location, "your location");
             }
 
             @Override
