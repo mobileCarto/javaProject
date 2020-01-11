@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
+
+#My .gitignore files with API keys and additional features to make the project working on my phone
+/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml
