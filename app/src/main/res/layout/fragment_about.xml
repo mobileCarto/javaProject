@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:height="20dp"
+        android:gravity="center_horizontal"
+        android:text="Video verified by The New York Times appears to show an Iranian missile hitting a plane near Tehran’s airport, the area where a Ukrainian jet crashed on Wednesday, killing all 176 people on board.
+
+As investigators work to determine an official cause of the accident, the video offered new clues about the crash, which came hours after a violent confrontation between Iran and the United States. American and allied officials on Thursday said they believed an Iranian missile had accidentally brought the plane down.
+
+A small explosion occurred when what appears to be a missile hit the plane above Parand, a city near the airport, but the plane did not explode, the video showed. The jet continued flying for several minutes and turned back toward the airport, The Times has determined. The plane, which by then had stopped transmitting its signal, flew toward the airport ablaze before it exploded and crashed quickly, other videos verified by The Times showed."
+        app:fontFamily="serif"
+        app:lineHeight="20dp" />
+
+</FrameLayout>

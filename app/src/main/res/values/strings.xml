@@ -2,4 +2,7 @@
     <string name="app_name">MobileCartoApp</string>
     <string name="navigation_drawer_open">Open Nav Drawer</string>
     <string name="navigation_drawer_close">Close Nav Drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

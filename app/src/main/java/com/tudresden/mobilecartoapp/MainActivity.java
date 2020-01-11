@@ -96,26 +96,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.nav_message:
+            case R.id.nav_history:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MessageFragment()).commit();
                 break;
             case R.id.nav_map:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapFragment()).commit();
                 break;
-            case R.id.nav_share:
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_motorcycle:
-                Toast.makeText(this, "Motorcycle!", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.nav_view:
                 Toast.makeText(this, "Latitude", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_about:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
                 break;
 
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     @Override
     public void onBackPressed() {
