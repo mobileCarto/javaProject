@@ -12,18 +12,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
+
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -47,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             locationListener = new LocationListener() {
                 public void onLocationChanged(Location location) {
                     if (location != null) {
+
                         double lat = location.getLatitude();
                         double lon = location.getLongitude();
 
@@ -72,9 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1340);
             }
-
-
-
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
