@@ -30,6 +30,7 @@ import android.location.LocationManager;
 
 import com.google.android.material.navigation.NavigationView;
 
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     LocationManager locationManager;
@@ -41,44 +42,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                if (location != null) {
-                    double lat = location.getLatitude();
-                    double lon = location.getLongitude();
 
-                    TextView latitudeField = findViewById(R.id.tv1);
-                    TextView longitudeField = findViewById(R.id.tv2);
+            locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            locationListener = new LocationListener() {
+                public void onLocationChanged(Location location) {
+                    if (location != null) {
+                        double lat = location.getLatitude();
+                        double lon = location.getLongitude();
 
-                    latitudeField.setText ("Latitude :" + lat);
-                    longitudeField.setText ("Longitude :" + lon);
+                        TextView latitudeField = findViewById(R.id.tv1);
+                        TextView longitudeField = findViewById(R.id.tv2);
+
+                        latitudeField.setText ("Latitude :" + lat);
+                        longitudeField.setText ("Longitude :" + lon);
+                    }
                 }
+
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
+
+                public void onProviderEnabled(String provider) {
+                }
+
+                public void onProviderDisabled(String provider) {
+                }
+            };
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 10, locationListener);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1340);
             }
 
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
 
-            public void onProviderEnabled(String provider) {
-            }
 
-            public void onProviderDisabled(String provider) {
-            }
-        };
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, locationListener);
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1340);
-        }
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
 
-        drawer =
-
-                findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
