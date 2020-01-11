@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="176dp"
-    android:background="@color/colorAccent"
+    android:background="@drawable/fire"
     android:gravity="bottom"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
@@ -17,13 +17,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="Sebastian!"
+        android:text="HeatApp"
+        android:textColor="@color/white"
+        android:textSize="10pt"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sebastianc.hancock@gmail.com" />
+        android:text="Collect your previous locations"
+        android:textColor="@color/white"/>
+
 
 
 </LinearLayout>
