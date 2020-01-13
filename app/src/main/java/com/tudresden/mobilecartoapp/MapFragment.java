@@ -3,10 +3,13 @@ package com.tudresden.mobilecartoapp;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +19,28 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Array;
+import java.util.List;
+
+import static com.tudresden.mobilecartoapp.AppDatabase.MIGRATION_1_2;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -34,15 +50,80 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     MapView mMapView;
     View mView;
 
+    /////////////////////database stuff///////////////
+    String db_name = "locations_db.sqlite";
+    LocationsDAO locationsdao;
+    List <Locations> locations_list;
 
-    public void getUserLocation(Location location, String title) {
 
-        LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-        //mGoogleMap.clear();
-        mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title(title));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
+    ////show from database (work in progress, currently just sets up db)
+    public void showFromDatabase(Location location){
+
+        final File dbFile = getActivity().getDatabasePath(db_name);
+        if (!dbFile.exists()) {
+            try {
+                copyDatabaseFile(dbFile.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, db_name)
+                .allowMainThreadQueries()
+                .addMigrations(MIGRATION_1_2)
+                .build();
+        locationsdao = database.getLocationsDAO();
+        locations_list = locationsdao.getAllLocations();
 
     }
+
+
+    private void copyDatabaseFile(String destinationPath) throws IOException {
+        InputStream assetsDB = getActivity().getAssets().open(db_name);
+        OutputStream dbOut = new FileOutputStream(destinationPath);
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = assetsDB.read(buffer)) > 0) {
+            dbOut.write(buffer, 0, length);
+        }
+        dbOut.flush();
+        dbOut.close();
+    }
+
+
+/////Timer - gets user latlng and updates
+    public void getUserLocationUpdate(final Location location) {
+        final Handler handler = new Handler();
+
+        ////change this to change the time interval ////////////////////////
+        final int timeInterval = 9000; //milliseconds
+
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                String lat = String.valueOf(location.getLatitude());
+                String lng = String.valueOf(location.getLongitude());
+                //mGoogleMap.clear();
+                mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("new loc").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
+
+                //insert lat lng
+                Locations seb = new Locations();
+
+
+                ///random time for testing - working on that part also
+                seb.setTime("12:10");
+                seb.setLatitude(lat);
+                seb.setLongitude(lng);
+
+                locationsdao.insert(seb);
+
+                handler.postDelayed(this, timeInterval);
+
+            }
+        }, timeInterval);
+
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,7 +164,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                getUserLocation(location, "your location");
+                //get initial latlng once map loads
+                LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                //mGoogleMap.clear();
+                mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
+                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
+                //call functions
+                getUserLocationUpdate(location);
+                showFromDatabase(location);
+
             }
 
             @Override
