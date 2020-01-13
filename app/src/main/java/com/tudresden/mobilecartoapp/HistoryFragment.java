@@ -46,18 +46,19 @@ public class HistoryFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_history, container, false);
 
         final File dbFile = getActivity().getDatabasePath(db_name);
-        if (!dbFile.exists()) {
-            try {
-                copyDatabaseFile(dbFile.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            if (!dbFile.exists()) {
+                try {
+                    copyDatabaseFile(dbFile.getAbsolutePath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
 
         AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, db_name)
                 .allowMainThreadQueries()
                 .addMigrations(MIGRATION_1_2)
                 .build();
+
         locationsdao = database.getLocationsDAO();
         locations_list = locationsdao.getAllLocations();
         recyclerView = rootView.findViewById(R.id.recycler_list);
