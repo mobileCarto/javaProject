@@ -3,13 +3,12 @@ package com.tudresden.mobilecartoapp;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,16 +26,20 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.android.gms.maps.model.TileProvider;
+import com.google.maps.android.heatmaps.Gradient;
+import com.google.maps.android.heatmaps.HeatmapTileProvider;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.tudresden.mobilecartoapp.AppDatabase.MIGRATION_1_2;
@@ -46,18 +48,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     LocationManager locationManager;
     LocationListener locationListener;
-    private GoogleMap mGoogleMap;
     MapView mMapView;
     View mView;
-
     /////////////////////database stuff///////////////
     String db_name = "locations_db.sqlite";
     LocationsDAO locationsdao;
-    List <Locations> locations_list;
+    List<Locations> locations_list;
 
+    private GoogleMap mGoogleMap;
+
+//    /////////////////////heatmap stuff///////////////
+    private static final double TILE_RADIUS_BASE = 1.47; // default
+    private static final float BASE_ZOOM = 12.0f;
+    private int mRadiusZoom = (int) BASE_ZOOM;
+
+    private HeatmapTileProvider mProvider;
+    private TileOverlay mOverlay;
 
     ////show from database (work in progress, currently just sets up db)
-    public void showFromDatabase(Location location){
+    public void showFromDatabase(Location location) {
 
         final File dbFile = getActivity().getDatabasePath(db_name);
         if (!dbFile.exists()) {
@@ -73,9 +82,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .build();
         locationsdao = database.getLocationsDAO();
         locations_list = locationsdao.getAllLocations();
-
     }
-
 
     private void copyDatabaseFile(String destinationPath) throws IOException {
         InputStream assetsDB = getActivity().getAssets().open(db_name);
@@ -89,16 +96,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         dbOut.close();
     }
 
-
-/////Timer - gets user latlng and updates
+    /////Timer - gets user latlng and updates
     public void getUserLocationUpdate(final Location location) {
         final Handler handler = new Handler();
 
         ////change this to change the time interval ////////////////////////
         final int timeInterval = 9000; //milliseconds
 
-        handler.postDelayed(new Runnable(){
-            public void run(){
+        handler.postDelayed(new Runnable() {
+            public void run() {
                 LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 String lat = String.valueOf(location.getLatitude());
                 String lng = String.valueOf(location.getLongitude());
@@ -123,7 +129,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }, timeInterval);
 
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -188,12 +193,60 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
         };
 
-        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 10, locationListener);
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1340);
         }
 
+        //Creating list of coordinates
+        final List<LatLng> latLngMarkers = new ArrayList<>();
+        {
+            latLngMarkers.add(new LatLng(51.02855, 13.723903)); //Computer Lab;
+            latLngMarkers.add(new LatLng(51.029040, 13.723541)); //Cartography chair
+            latLngMarkers.add(new LatLng(51.028620, 13.736834)); //Library
+            latLngMarkers.add(new LatLng(51.052924, 13.733902)); //Zwinger
+            latLngMarkers.add(new LatLng(51.041433, 13.755226)); //Grosser Garten
+            latLngMarkers.add(new LatLng(51.033708, 13.698835)); //Lobtau
+        }
+
+        //Iterating through the list of coordinates and displaying them on the map
+        MarkerOptions currentMarker;
+        for (int i = 0; i < latLngMarkers.size(); i++) {
+            currentMarker = getMarkerFromPoint(latLngMarkers.get(i));
+            mGoogleMap.addMarker(currentMarker);
+        }
+
+        // Set gradient
+        int[] colors = {
+                Color.rgb(79, 195, 247), // blue
+                Color.rgb(255, 235, 59), // yellow
+                Color.rgb(255, 152, 0), // orange
+                Color.rgb(244, 67, 54)    // red
+        };
+        float[] startPoints = {
+                0.1f, 0.5f, 0.8f, 1.0f
+        };
+        Gradient gradient = new Gradient(colors, startPoints);
+
+        // Create a heat map tile provider, passing it the latlngs of the police stations.
+        int radius = (int) Math.floor(Math.pow(TILE_RADIUS_BASE, mRadiusZoom));
+        mProvider = new HeatmapTileProvider.Builder()
+                .data(latLngMarkers)
+                .gradient(gradient)
+                .opacity(0.6f)
+                .build();
+        mProvider.setRadius(radius);
+        if (mOverlay != null) {
+            mOverlay.clearTileCache();
+        }
+        // Add a tile overlay to the map, using the heat map tile provider.
+        mOverlay = mGoogleMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
     }
 
+    private MarkerOptions getMarkerFromPoint(LatLng latLng) {
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        return markerOptions;
+    }
 }

@@ -40,4 +40,6 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.0-beta01'
     annotationProcessor 'androidx.room:room-compiler:2.2.0-beta01'
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta03'
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
+    implementation 'com.google.maps.android:android-maps-utils:0.4+'
 }
