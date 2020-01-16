@@ -82,6 +82,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .build();
         locationsdao = database.getLocationsDAO();
         locations_list = locationsdao.getAllLocations();
+
+        //loop through all locations in database
+        for (int i = 0;i < locations_list.size(); i++) {
+            String lats = locations_list.get(i).getLatitude();
+            String lngs = locations_list.get(i).getLongitude();
+            String time = locations_list.get(i).getTime();
+
+            //convert latlng to doubles
+            double lat = Double.parseDouble(lats);
+            double lng = Double.parseDouble(lngs);
+
+            mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(time).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+        }
     }
 
     private void copyDatabaseFile(String destinationPath) throws IOException {
@@ -175,7 +189,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
                 //call functions
-                getUserLocationUpdate(location);
+                //getUserLocationUpdate(location);
                 showFromDatabase(location);
 
             }
