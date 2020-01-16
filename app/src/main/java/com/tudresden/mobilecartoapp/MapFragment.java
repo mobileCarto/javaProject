@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import java.util.Calendar;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -163,7 +164,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
 
                 ///random time for testing - working on that part also
-                seb.setTime("12:10");
+                seb.setTime(Calendar.getInstance().getTime().toString());
                 seb.setLatitude(lat);
                 seb.setLongitude(lng);
 
