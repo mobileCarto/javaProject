@@ -208,7 +208,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         mGoogleMap = googleMap;
         MapsInitializer.initialize(getContext());
-        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        //googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         try {
             // Customise the styling of the base map using a JSON object defined
