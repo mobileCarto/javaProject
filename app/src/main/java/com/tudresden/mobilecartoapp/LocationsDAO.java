@@ -29,6 +29,8 @@ public interface LocationsDAO {
     @Query("SELECT latitude FROM locations_table")
     public List<String> getArrayLocations();
 
+
+
 }
 
 

@@ -14,13 +14,13 @@ public class Locations {
     private Integer ID;
     @NonNull
     @ColumnInfo(name = "time")
-    private String Time;
+    public String Time;
     @NonNull
     @ColumnInfo(name = "latitude")
-    private String Latitude;
+    public String Latitude;
     @NonNull
     @ColumnInfo(name = "longitude")
-    private String Longitude;
+    public String Longitude;
 
     public Integer getID() {
         return ID;
@@ -53,4 +53,8 @@ public class Locations {
     public void setLongitude(String locations_longitude) {
         this.Longitude = locations_longitude;
     }
+
 }
+
+
+
