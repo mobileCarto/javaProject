@@ -156,7 +156,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 String lat = String.valueOf(location.getLatitude());
                 String lng = String.valueOf(location.getLongitude());
                 //mGoogleMap.clear();
-                mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("new loc").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("new loc").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
 
                 //insert lat lng
