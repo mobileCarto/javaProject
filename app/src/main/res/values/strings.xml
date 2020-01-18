@@ -9,6 +9,7 @@
     <string name="Map">Map</string>
     <string name="History">History</string>
     <string name="About">About</string>
+    <string name="AboutContent">Here is text not about a plane crash</string>
     <string name="HeatApp">HeatApp</string>
     <string name="MainIconLogo">Main icon/logo</string>
     <string name="CollectYourPreviousLocations">Collect your previous locations</string>

@@ -27,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -35,6 +36,8 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.android.gms.maps.model.MapStyleOptions;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import java.io.File;
@@ -43,7 +46,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static com.tudresden.mobilecartoapp.AppDatabase.MIGRATION_1_2;
 
@@ -154,10 +159,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         dbOut.close();
     }
 
+
+
+    //returns current location
+    public LatLng getCurrentLocation(Location location){
+
+        LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
+        return myLatLng;
+    }
+
+
+    //returns current time
+    public String getCurrentTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault());
+        String currentDateAndTime = sdf.format(new Date());
+        return currentDateAndTime;
+    }
+
     /////Timer - gets user latlng and updates
     public void getUserLocationUpdate(final Location location) {
-        LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
         final Handler handler = new Handler();
 
         ////change this to change the time interval ////////////////////////
@@ -165,19 +186,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         handler.postDelayed(new Runnable() {
             public void run() {
+
                 LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 String lat = String.valueOf(location.getLatitude());
                 String lng = String.valueOf(location.getLongitude());
                 //mGoogleMap.clear();
                 //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("new loc").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
+                mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
+
 
                 //insert lat lng
                 Locations seb = new Locations();
 
-
                 ///random time for testing - working on that part also
-                seb.setTime(Calendar.getInstance().getTime().toString());
+                seb.setTime(getCurrentTime());
                 seb.setLatitude(lat);
                 seb.setLongitude(lng);
 
@@ -195,6 +217,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
 
     }
+
+
 
     @Nullable
     @Override
@@ -249,7 +273,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 //mGoogleMap.clear();
                 //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
                 //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
+
+                Log.d("SEB", "hey");
                 //call functions
+                getCurrentLocation(location);
                 getUserLocationUpdate(location);
                 showFromDatabase(location);
 
