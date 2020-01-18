@@ -1,43 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="40dp"
-    android:stretchColumns="0,1,2,3">
+    android:paddingTop="40dp">
 
+    <TextView
+        android:id="@+id/firstLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    <TableRow>
+    <TextView
+        android:id="@+id/secondLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/firstLine"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="6dip"
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/thirdLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/secondLine"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="6dip"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/thirdLine"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="6dip"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/forthLine"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="6dip"
-            android:textSize="16sp" />
-    </TableRow>
-</TableLayout>
+    <TextView
+        android:id="@+id/forthLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</TableRow>
