@@ -4,10 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -31,7 +27,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -94,14 +89,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         // Set gradient
         int[] colors = {
-                Color.rgb(79, 195, 247), // blue
-                Color.rgb(255, 235, 59), // yellow
+                //Color.rgb(79, 195, 247), // blue
+
+              //Color.rgb(255,255,255), //white
+                Color.rgb(240,255,80), //light yellow
+              // Color.rgb(255, 253, 2), // yellow
+                Color.rgb(251,176,33), //dark yellow
+
+
                 Color.rgb(255, 152, 0), // orange
-                Color.rgb(244, 67, 54)    // red
+                Color.rgb(246,136,56),//bright orange
+                Color.rgb	(238,62,50), //bright red
+                Color.rgb(244, 67, 54)   // red
         };
+
+        //starting point for colors
         float[] startPoints = {
-                0.1f, 0.5f, 0.8f, 1.0f
+                0.1f,0.2f,0.4f,0.6f,0.8f,1f
         };
+
         Gradient gradient = new Gradient(colors, startPoints);
 
         //loop through all locations in database
@@ -119,7 +125,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mGoogleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lng))
                     .title(time)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_grey_black_01cm)));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_grey_02cm))
+                    .alpha(0.5f));
         }
 
         // Create a heat map tile provider, passing it the latlngs of the police stations.
@@ -127,7 +134,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mProvider = new HeatmapTileProvider.Builder()
                 .data(latLngMarkers)
                 .gradient(gradient)
-                .opacity(0.6f)
+                .opacity(0.8f)
                 .build();
         mProvider.setRadius(radius);
         if (mOverlay != null) {
@@ -151,6 +158,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     /////Timer - gets user latlng and updates
     public void getUserLocationUpdate(final Location location) {
+        LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
         final Handler handler = new Handler();
 
         ////change this to change the time interval ////////////////////////
@@ -234,14 +243,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
+
             @Override
             public void onLocationChanged(Location location) {
                 //get initial latlng once map loads
-                LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                //LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 //mGoogleMap.clear();
                 //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
+
+                // enable current location ellipse/marker
                 mGoogleMap.setMyLocationEnabled(true);
-                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
+
+                //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
+
                 //call functions
                 getUserLocationUpdate(location);
                 showFromDatabase(location);
