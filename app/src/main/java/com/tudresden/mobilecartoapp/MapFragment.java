@@ -156,6 +156,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     /////Timer - gets user latlng and updates
     public void getUserLocationUpdate(final Location location) {
+        LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
         final Handler handler = new Handler();
 
         ////change this to change the time interval ////////////////////////
@@ -239,13 +241,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
+
             @Override
             public void onLocationChanged(Location location) {
                 //get initial latlng once map loads
-                LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                //LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 //mGoogleMap.clear();
-                mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
-                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
+                //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
+                //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
                 //call functions
                 getUserLocationUpdate(location);
                 showFromDatabase(location);
