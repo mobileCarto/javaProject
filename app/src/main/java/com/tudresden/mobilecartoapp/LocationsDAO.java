@@ -26,11 +26,6 @@ public interface LocationsDAO {
     @Query("SELECT * FROM locations_table WHERE id = :locations_id")
     public List<Locations> getLocationsInfoByID(String locations_id);
 
-    @Query("SELECT latitude FROM locations_table")
-    public List<String> getArrayLocations();
-
-
-
 }
 
 

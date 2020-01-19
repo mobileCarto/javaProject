@@ -59,7 +59,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     MapView mMapView;
     View mView;
     /////////////////////database stuff///////////////
-    String db_name = "locations_db.sqlite";
+    //String db_name = "locations_db.sqlite";
+    String db_name = "test.sqlite";
     LocationsDAO locationsdao;
     List<Locations> locations_list;
 
@@ -91,6 +92,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         locationsdao = database.getLocationsDAO();
         locations_list = locationsdao.getAllLocations();
 
+        //Log.d("SEB", locations_list.toString());
+
         final List<LatLng> latLngMarkers = new ArrayList<>();
 
         // Set gradient
@@ -101,8 +104,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 Color.rgb(240,255,80), //light yellow
               // Color.rgb(255, 253, 2), // yellow
                 Color.rgb(251,176,33), //dark yellow
-
-
                 Color.rgb(255, 152, 0), // orange
                 Color.rgb(246,136,56),//bright orange
                 Color.rgb	(238,62,50), //bright red
@@ -128,7 +129,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
             latLngMarkers.add(new LatLng(lat, lng));
 
-            mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(time).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            //mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(time).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
         }
 
@@ -165,7 +166,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public LatLng getCurrentLocation(Location location){
 
         LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
+        //mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
         return myLatLng;
     }
 
@@ -215,6 +216,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
     }
 
@@ -274,10 +276,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
                 //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
 
-                Log.d("SEB", "hey");
                 //call functions
                 getCurrentLocation(location);
-                getUserLocationUpdate(location);
+                //getUserLocationUpdate(location);
                 showFromDatabase(location);
 
             }

@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "locations_table")
+//@Entity(tableName = "locations")
 public class Locations {
     @PrimaryKey
     @NonNull
