@@ -131,7 +131,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
             mGoogleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lng))
-                    .title(time)
+                    //.title(time)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_grey_02cm))
                     .alpha(0.5f));
         }
