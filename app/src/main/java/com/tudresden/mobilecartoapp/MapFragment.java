@@ -56,7 +56,7 @@ import static com.tudresden.mobilecartoapp.AppDatabase.MIGRATION_1_2;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    //    /////////////////////heatmap stuff///////////////
+    ///////////////////////heatmap stuff///////////////
     private static final double TILE_RADIUS_BASE = 1.47; // default
     private static final float BASE_ZOOM = 12.0f;
     private int mRadiusZoom = (int) BASE_ZOOM;
@@ -67,6 +67,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     LocationListener locationListener;
     MapView mMapView;
     View mView;
+
     /////////////////////database stuff///////////////
     //String db_name = "locations_db.sqlite";
     String db_name = "test.sqlite";
@@ -74,7 +75,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     List<Locations> locations_list;
     private GoogleMap mGoogleMap;
 
-    ////show from database (work in progress, currently just sets up db)
+    ////show from database
     public void showFromDatabase(Location location) {
 
         final File dbFile = getActivity().getDatabasePath(db_name);
@@ -92,9 +93,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         locationsdao = database.getLocationsDAO();
         locations_list = locationsdao.getAllLocations();
 
-        //Log.d("SEB", locations_list.toString());
-
         final List<LatLng> latLngMarkers = new ArrayList<>();
+
+        //loop through all locations in database
+        for (int i = 0; i < locations_list.size(); i++) {
+            String lats = locations_list.get(i).getLatitude();
+            String lngs = locations_list.get(i).getLongitude();
+            String time = locations_list.get(i).getTime();
+
+            //convert latlng to doubles
+            double lat = Double.parseDouble(lats);
+            double lng = Double.parseDouble(lngs);
+
+            latLngMarkers.add(new LatLng(lat, lng));
+
+            mGoogleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat, lng))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_grey_02cm))
+                    .alpha(0.5f));
+        }
 
         // Set gradient
         int[] colors = {
@@ -116,25 +133,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         };
 
         Gradient gradient = new Gradient(colors, startPoints);
-
-        //loop through all locations in database
-        for (int i = 0; i < locations_list.size(); i++) {
-            String lats = locations_list.get(i).getLatitude();
-            String lngs = locations_list.get(i).getLongitude();
-            String time = locations_list.get(i).getTime();
-
-            //convert latlng to doubles
-            double lat = Double.parseDouble(lats);
-            double lng = Double.parseDouble(lngs);
-
-            latLngMarkers.add(new LatLng(lat, lng));
-
-            mGoogleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(lat, lng))
-                    //.title(time)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_grey_02cm))
-                    .alpha(0.5f));
-        }
 
         // Create a heat map tile provider, passing it the latlngs of the police stations.
         int radius = (int) Math.floor(Math.pow(TILE_RADIUS_BASE, mRadiusZoom));
@@ -163,18 +161,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         dbOut.close();
     }
 
-
-
-    //returns current location
+    //function to return current location
     public LatLng getCurrentLocation(Location location){
-
         LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-        //mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
         return myLatLng;
     }
 
-
-    //returns current time
+    //function to return current time
     public String getCurrentTime(){
         SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault());
         String currentDateAndTime = sdf.format(new Date());
@@ -186,7 +179,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         final Handler handler = new Handler();
 
         ////change this to change the time interval ////////////////////////
-        final int timeInterval = 90000; //milliseconds
+        final int timeInterval = 600000; //10 min in milliseconds = 600000
 
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -194,21 +187,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 String lat = String.valueOf(location.getLatitude());
                 String lng = String.valueOf(location.getLongitude());
-                //mGoogleMap.clear();
-                //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("new loc").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                 mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
-
 
                 //insert lat lng
                 Locations seb = new Locations();
-
-                ///random time for testing - working on that part also
+                
                 seb.setTime(getCurrentTime());
                 seb.setLatitude(lat);
                 seb.setLongitude(lng);
 
                 locationsdao.insert(seb);
-
                 handler.postDelayed(this, timeInterval);
 
             }
@@ -219,11 +207,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
     }
-
-
 
     @Nullable
     @Override
