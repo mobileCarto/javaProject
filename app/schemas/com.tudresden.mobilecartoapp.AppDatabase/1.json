@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5c855b5c78323e7fb5cc172893168568",
+    "identityHash": "73c5738138ab87f9a6934e02dcdb7662",
     "entities": [
       {
-        "tableName": "locations_table",
+        "tableName": "locations",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `time` TEXT NOT NULL, `latitude` TEXT NOT NULL, `longitude` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -46,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5c855b5c78323e7fb5cc172893168568')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '73c5738138ab87f9a6934e02dcdb7662')"
     ]
   }
 }
