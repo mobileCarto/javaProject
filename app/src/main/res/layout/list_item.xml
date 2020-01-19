@@ -10,23 +10,37 @@
         android:id="@+id/firstLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp" />
+
 
     <TextView
         android:id="@+id/secondLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"/>
 
     <TextView
         android:id="@+id/thirdLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"/>
 
     <TextView
         android:id="@+id/forthLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"/>
+
 </TableRow>

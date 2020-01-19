@@ -24,7 +24,7 @@ import static com.tudresden.mobilecartoapp.AppDatabase.MIGRATION_1_2;
 
 public class HistoryFragment extends Fragment {
 
-    String db_name = "locations_db.sqlite";
+    String db_name = "test.sqlite";
     LocationsDAO locationsdao;
     List<Locations> locations_list;
     RecyclerView recyclerView;

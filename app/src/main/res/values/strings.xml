@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MobileCartoApp</string>
+    <string name="app_name">does this work</string>
     <string name="navigation_drawer_open">Open Nav Drawer</string>
     <string name="navigation_drawer_close">Close Nav Drawer</string>
     <string name="ID">ID</string>
@@ -9,7 +9,14 @@
     <string name="Map">Map</string>
     <string name="History">History</string>
     <string name="About">About</string>
-    <string name="AboutContent">Here is text not about a plane crash</string>
+    <string name="AboutContent">HEATAPP is a simple, fast, secure and free way to monitor your locations and show them by a heat map. You can restore a list of your precise coordinates in a separate page.
+The App is designed by a group of Cartography students of Technical University of Dresden (TUD) as a class project in January 2020. \n\nGroup members are:\n\n
+    Sebastian Hancock\n
+    Valeria Shurupina\n
+    Mostafa Kheyrollahi\n
+    Shahtaj Ghufran\n\n
+    © 2020 HEATAPP, All Rights Reserved
+</string>
     <string name="HeatApp">HeatApp</string>
     <string name="MainIconLogo">Main icon/logo</string>
     <string name="CollectYourPreviousLocations">Collect your previous locations</string>
