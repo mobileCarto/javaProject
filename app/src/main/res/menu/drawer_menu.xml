@@ -9,14 +9,15 @@
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_map"
             android:title="@string/Map"
-            />
+            android:color="@color/white"/>
         <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_history"
-            android:title="@string/History" />
+            android:title="@string/History"/>
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_about"
-            android:title="@string/About" />
+            android:title="@string/About"
+            android:textColor="@color/white"/>
     </group>
 </menu>
