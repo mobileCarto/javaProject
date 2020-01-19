@@ -37,7 +37,9 @@ import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.android.gms.maps.model.MapStyleOptions;
 
+
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 
 import java.io.File;
@@ -54,6 +56,13 @@ import static com.tudresden.mobilecartoapp.AppDatabase.MIGRATION_1_2;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
+    //    /////////////////////heatmap stuff///////////////
+    private static final double TILE_RADIUS_BASE = 1.47; // default
+    private static final float BASE_ZOOM = 12.0f;
+    private int mRadiusZoom = (int) BASE_ZOOM;
+    private HeatmapTileProvider mProvider;
+    private TileOverlay mOverlay;
+
     LocationManager locationManager;
     LocationListener locationListener;
     MapView mMapView;
@@ -63,16 +72,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     String db_name = "test.sqlite";
     LocationsDAO locationsdao;
     List<Locations> locations_list;
-
     private GoogleMap mGoogleMap;
-
-//    /////////////////////heatmap stuff///////////////
-    private static final double TILE_RADIUS_BASE = 1.47; // default
-    private static final float BASE_ZOOM = 12.0f;
-    private int mRadiusZoom = (int) BASE_ZOOM;
-
-    private HeatmapTileProvider mProvider;
-    private TileOverlay mOverlay;
 
     ////show from database (work in progress, currently just sets up db)
     public void showFromDatabase(Location location) {
@@ -118,7 +118,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         Gradient gradient = new Gradient(colors, startPoints);
 
         //loop through all locations in database
-        for (int i = 0;i < locations_list.size(); i++) {
+        for (int i = 0; i < locations_list.size(); i++) {
             String lats = locations_list.get(i).getLatitude();
             String lngs = locations_list.get(i).getLongitude();
             String time = locations_list.get(i).getTime();
@@ -129,8 +129,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
             latLngMarkers.add(new LatLng(lat, lng));
 
-            //mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(time).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-
+            mGoogleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat, lng))
+                    .title(time)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_grey_02cm))
+                    .alpha(0.5f));
         }
 
         // Create a heat map tile provider, passing it the latlngs of the police stations.
@@ -274,6 +277,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 //LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 //mGoogleMap.clear();
                 //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
+
+                // enable current location ellipse/marker
+                mGoogleMap.setMyLocationEnabled(true);
+
                 //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
 
                 //call functions

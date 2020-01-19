@@ -3,76 +3,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TableLayout
+    <TableRow
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="10dp"
         android:stretchColumns="1,2,3">
 
-        <TableRow>
-
-            <TextView
-                android:id="@+id/header_line_id"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:paddingLeft="6dp"
-                android:text="@string/ID"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/header_line_time"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:paddingLeft="70dp"
-                android:text="@string/Time"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/header_line_latitude"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:paddingLeft="58dp"
-                android:text="@string/Latitude"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/header_line_longitude"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:text="@string/Longitude"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </TableRow>
-    </TableLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:orientation="vertical">
+        <TextView
+            android:id="@+id/header_line_id"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:paddingStart="6dp"
+            android:paddingLeft="6dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:text="@string/ID"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/latitude_1"
+            android:id="@+id/header_line_time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Latitude :  "
-            android:textSize="24dp" />
+            android:layout_height="fill_parent"
+            android:paddingStart="70dp"
+            android:paddingLeft="70dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:text="@string/Time"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/longitude_2"
+            android:id="@+id/header_line_latitude"
             android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:paddingStart="58dp"
+            android:paddingLeft="58dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:text="@string/Latitude"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/header_line_longitude"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Longitude :  "
-            android:textSize="24dp" />
-    </LinearLayout>
+            android:paddingStart="15dp"
+            android:paddingLeft="15dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:text="@string/Longitude"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </TableRow>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_list"
