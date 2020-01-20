@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical">
-=======
-    android:layout_height="match_parent">
->>>>>>> parent of 91496da... History improved
-=======
-    android:layout_height="match_parent">
->>>>>>> parent of 91496da... History improved
+
 
     <TableRow
         android:id="@+id/header_line"
@@ -19,15 +13,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="10dp"
-<<<<<<< HEAD
-<<<<<<< HEAD
-        android:textColor="@color/white"
-        android:paddingBottom="10dp"
-=======
->>>>>>> parent of 91496da... History improved
-=======
->>>>>>> parent of 91496da... History improved
-        android:stretchColumns="1,2,3">
+
+        android:paddingBottom="10dp">
+        <!--android:textColor="@color/white" -->
+
 
         <TextView
             android:id="@+id/header_line_id"
@@ -38,9 +27,9 @@
             android:paddingEnd="0dp"
             android:paddingRight="0dp"
             android:text="@string/ID"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/header_line_time"
@@ -51,10 +40,9 @@
             android:paddingEnd="0dp"
             android:paddingRight="0dp"
             android:text="@string/Time"
-            android:textSize="16sp"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/header_line_latitude"
@@ -65,9 +53,9 @@
             android:paddingEnd="0dp"
             android:paddingRight="0dp"
             android:text="@string/Latitude"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/header_line_longitude"
@@ -78,9 +66,9 @@
             android:paddingEnd="0dp"
             android:paddingRight="0dp"
             android:text="@string/Longitude"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
+            android:textStyle="bold" />
     </TableRow>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -88,16 +76,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-<<<<<<< HEAD
-<<<<<<< HEAD
         android:text="@string/HistoryPart"
-        android:textColor="@color/white"/>
-=======
-        android:text="@string/HistoryPart" />
->>>>>>> parent of 91496da... History improved
-=======
-        android:text="@string/HistoryPart" />
->>>>>>> parent of 91496da... History improved
+        android:textColor="@color/white" />
 
 
 </RelativeLayout>

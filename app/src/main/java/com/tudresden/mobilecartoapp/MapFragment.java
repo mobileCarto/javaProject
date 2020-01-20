@@ -227,7 +227,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mMapView.onCreate(null);
             mMapView.onResume();
             mMapView.getMapAsync(this);
-            showFromDatabase();
+            //showFromDatabase();
         }
     }
 
@@ -264,7 +264,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
 
                 // enable current location ellipse/marker
-                mGoogleMap.setMyLocationEnabled(true);
+                //mGoogleMap.setMyLocationEnabled(true);
 
                 //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
 
