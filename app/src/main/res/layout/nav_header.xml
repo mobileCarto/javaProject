@@ -2,17 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="176dp"
-    android:background="@drawable/fire"
+    android:background="@drawable/wallpaper"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="6dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="115dp"
+        android:layout_height="92dp"
         android:contentDescription="@string/MainIconLogo"
-        android:src="@mipmap/ic_launcher_round" />
+        android:padding="9dp"
+        android:paddingLeft="10dp"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:src="@drawable/logo" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,14 +24,16 @@
         android:paddingTop="8dp"
         android:text="@string/HeatApp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/white"
-        android:textSize="10pt" />
+        android:textColor="@color/light_gray"
+        android:textSize="10pt"
+        android:paddingLeft="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/CollectYourPreviousLocations"
-        android:textColor="@color/white" />
+        android:textColor="@color/light_gray"
+        android:paddingLeft="10dp"/>
 
 
 </LinearLayout>
