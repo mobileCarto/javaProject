@@ -258,6 +258,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
             @Override
             public void onLocationChanged(Location location) {
+                showFromDatabase();
                 //get initial latlng once map loads
                 //LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 //mGoogleMap.clear();
