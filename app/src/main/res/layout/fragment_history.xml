@@ -2,9 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
 <<<<<<< HEAD
+<<<<<<< HEAD
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical">
+=======
+    android:layout_height="match_parent">
+>>>>>>> parent of 91496da... History improved
 =======
     android:layout_height="match_parent">
 >>>>>>> parent of 91496da... History improved
@@ -16,8 +20,11 @@
         android:gravity="center"
         android:paddingTop="10dp"
 <<<<<<< HEAD
+<<<<<<< HEAD
         android:textColor="@color/white"
         android:paddingBottom="10dp"
+=======
+>>>>>>> parent of 91496da... History improved
 =======
 >>>>>>> parent of 91496da... History improved
         android:stretchColumns="1,2,3">
@@ -82,8 +89,12 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
 <<<<<<< HEAD
+<<<<<<< HEAD
         android:text="@string/HistoryPart"
         android:textColor="@color/white"/>
+=======
+        android:text="@string/HistoryPart" />
+>>>>>>> parent of 91496da... History improved
 =======
         android:text="@string/HistoryPart" />
 >>>>>>> parent of 91496da... History improved

@@ -2,11 +2,15 @@
 
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
     android:paddingTop="40dp"
     android:textColor="@color/white"
     android:layout_width="match_parent"
+=======
+    android:layout_width="wrap_content"
+>>>>>>> parent of 91496da... History improved
 =======
     android:layout_width="wrap_content"
 >>>>>>> parent of 91496da... History improved
@@ -21,7 +25,10 @@
         android:background="@drawable/rectangle"
         android:paddingLeft="11dp"
         android:paddingRight="11dp" />
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 91496da... History improved
 
     <TextView
         android:id="@+id/secondLine"
@@ -49,9 +56,13 @@
         android:background="@drawable/rectangle"
         android:paddingLeft="11dp"
 <<<<<<< HEAD
+<<<<<<< HEAD
         android:paddingRight="11dp"
         android:textSize="14sp" />
 
+=======
+        android:paddingRight="11dp"/>
+>>>>>>> parent of 91496da... History improved
 =======
         android:paddingRight="11dp"/>
 >>>>>>> parent of 91496da... History improved
