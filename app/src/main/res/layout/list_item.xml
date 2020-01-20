@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
 
 
     android:paddingTop="40dp"
     android:textColor="@color/white"
     android:layout_width="match_parent"
+=======
+    android:layout_width="wrap_content"
+>>>>>>> parent of 91496da... History improved
     android:layout_height="wrap_content">
 
 
     <TextView
         android:id="@+id/firstLine"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:background="@drawable/rectangle"
         android:paddingLeft="11dp"
-        android:paddingRight="11dp"
-        android:textSize="14sp" />
+        android:paddingRight="11dp" />
 
 
     <TextView
         android:id="@+id/secondLine"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:background="@drawable/rectangle"
         android:paddingLeft="11dp"
-        android:paddingRight="11dp"
-        android:textSize="14sp" />
+        android:paddingRight="11dp"/>
 
     <TextView
         android:id="@+id/thirdLine"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:background="@drawable/rectangle"
         android:paddingLeft="11dp"
-        android:paddingRight="11dp"
-        android:textSize="14sp" />
+        android:paddingRight="11dp"/>
 
     <TextView
         android:id="@+id/forthLine"
@@ -47,7 +48,11 @@
         android:textColor="@color/white"
         android:background="@drawable/rectangle"
         android:paddingLeft="11dp"
+<<<<<<< HEAD
         android:paddingRight="11dp"
         android:textSize="14sp" />
 
+=======
+        android:paddingRight="11dp"/>
+>>>>>>> parent of 91496da... History improved
 </TableRow>

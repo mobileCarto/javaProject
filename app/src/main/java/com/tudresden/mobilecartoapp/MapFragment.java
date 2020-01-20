@@ -76,7 +76,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mGoogleMap;
 
     ////show from database
-    public void showFromDatabase(Location location) {
+    public void showFromDatabase() {
 
         final File dbFile = getActivity().getDatabasePath(db_name);
         if (!dbFile.exists()) {
@@ -117,19 +117,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         int[] colors = {
                 //Color.rgb(79, 195, 247), // blue
 
-              //Color.rgb(255,255,255), //white
+                //Color.rgb(255,255,255), //white
                 //Color.rgb(240,255,80), //light yellow
                 Color.rgb(255, 253, 2), // yellow
-                Color.rgb(251,176,33), //dark yellow
+                Color.rgb(251, 176, 33), //dark yellow
                 Color.rgb(255, 152, 0), // orange
-                Color.rgb(246,136,56),//bright orange
+                Color.rgb(246, 136, 56),//bright orange
                 //Color.rgb	(238,62,50), //bright red
                 Color.rgb(244, 67, 54)   // red
         };
 
         //starting point for colors
         float[] startPoints = {
-                0.3f,0.4f,0.5f,0.6f,0.8f
+                0.3f, 0.4f, 0.5f, 0.6f, 0.8f
         };
 
         Gradient gradient = new Gradient(colors, startPoints);
@@ -162,13 +162,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     //function to return current location
-    public LatLng getCurrentLocation(Location location){
+    public LatLng getCurrentLocation(Location location) {
         LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
         return myLatLng;
     }
 
     //function to return current time
-    public String getCurrentTime(){
+    public String getCurrentTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault());
         String currentDateAndTime = sdf.format(new Date());
         return currentDateAndTime;
@@ -191,11 +191,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                 //insert lat lng
                 Locations seb = new Locations();
-                
+
                 seb.setTime(getCurrentTime());
                 seb.setLatitude(lat);
                 seb.setLongitude(lng);
-
                 locationsdao.insert(seb);
                 handler.postDelayed(this, timeInterval);
 
@@ -206,6 +205,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 
@@ -227,6 +227,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mMapView.onCreate(null);
             mMapView.onResume();
             mMapView.getMapAsync(this);
+            showFromDatabase();
         }
     }
 
@@ -268,9 +269,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
 
                 //call functions
-                getCurrentLocation(location);
+                //getCurrentLocation(location);
                 //getUserLocationUpdate(location);
-                showFromDatabase(location);
+
 
             }
 

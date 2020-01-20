@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+<<<<<<< HEAD
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical">
+=======
+    android:layout_height="match_parent">
+>>>>>>> parent of 91496da... History improved
 
     <TableRow
         android:id="@+id/header_line"
@@ -11,8 +15,11 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="10dp"
+<<<<<<< HEAD
         android:textColor="@color/white"
         android:paddingBottom="10dp"
+=======
+>>>>>>> parent of 91496da... History improved
         android:stretchColumns="1,2,3">
 
         <TextView
@@ -46,8 +53,8 @@
             android:id="@+id/header_line_latitude"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:paddingStart="57dp"
-            android:paddingLeft="57dp"
+            android:paddingStart="58dp"
+            android:paddingLeft="58dp"
             android:paddingEnd="0dp"
             android:paddingRight="0dp"
             android:text="@string/Latitude"
@@ -59,8 +66,8 @@
             android:id="@+id/header_line_longitude"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="30dp"
-            android:paddingLeft="30dp"
+            android:paddingStart="15dp"
+            android:paddingLeft="15dp"
             android:paddingEnd="0dp"
             android:paddingRight="0dp"
             android:text="@string/Longitude"
@@ -74,8 +81,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
+<<<<<<< HEAD
         android:text="@string/HistoryPart"
         android:textColor="@color/white"/>
+=======
+        android:text="@string/HistoryPart" />
+>>>>>>> parent of 91496da... History improved
 
 
-</LinearLayout>
+</RelativeLayout>
