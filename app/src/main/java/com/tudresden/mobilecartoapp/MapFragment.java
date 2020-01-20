@@ -149,22 +149,107 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mOverlay = mGoogleMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
     }
 
-    private void copyDatabaseFile(String destinationPath) throws IOException {
-        InputStream assetsDB = getActivity().getAssets().open(db_name);
-        OutputStream dbOut = new FileOutputStream(destinationPath);
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = assetsDB.read(buffer)) > 0) {
-            dbOut.write(buffer, 0, length);
-        }
-        dbOut.flush();
-        dbOut.close();
-    }
+
 
     //function to return current location
     public LatLng getCurrentLocation(Location location) {
         LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
         return myLatLng;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
+            container, @Nullable Bundle savedInstanceState) {
+        mView = inflater.inflate(R.layout.fragment_map, container, false);
+        return mView;
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mMapView = (MapView) mView.findViewById(R.id.map);
+        if (mMapView != null) {
+            mMapView.onCreate(null);
+            mMapView.onResume();
+            mMapView.getMapAsync(this);
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        mGoogleMap = googleMap;
+        MapsInitializer.initialize(getContext());
+        //googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        showFromDatabase();
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.050704,13.737443),9));
+
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = mGoogleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            getActivity(), R.raw.style_map));
+
+            if (!success) {
+                Log.e("MapsActivity", "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e("MapsActivity", "Can't find style. Error: ", e);
+        }
+
+
+       /* locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+
+            @Override
+            public void onLocationChanged(Location location) {
+
+                //get initial latlng once map loads
+                //LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                //mGoogleMap.clear();
+                //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
+
+                // enable current location ellipse/marker
+                //mGoogleMap.setMyLocationEnabled(true);
+
+                //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
+
+                //call functions
+                //getCurrentLocation(location);
+                //getUserLocationUpdate(location);
+
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+            }
+        };
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 10, locationListener);
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1340);
+        } */
+
     }
 
     //function to return current time
@@ -203,98 +288,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
-            container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_map, container, false);
-        return mView;
-
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mMapView = (MapView) mView.findViewById(R.id.map);
-        if (mMapView != null) {
-            mMapView.onCreate(null);
-            mMapView.onResume();
-            mMapView.getMapAsync(this);
-            //showFromDatabase();
+    private void copyDatabaseFile(String destinationPath) throws IOException {
+        InputStream assetsDB = getActivity().getAssets().open(db_name);
+        OutputStream dbOut = new FileOutputStream(destinationPath);
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = assetsDB.read(buffer)) > 0) {
+            dbOut.write(buffer, 0, length);
         }
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-        mGoogleMap = googleMap;
-        MapsInitializer.initialize(getContext());
-        //googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        try {
-            // Customise the styling of the base map using a JSON object defined
-            // in a raw resource file.
-            boolean success = mGoogleMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(
-                            getActivity(), R.raw.style_map));
-
-            if (!success) {
-                Log.e("MapsActivity", "Style parsing failed.");
-            }
-        } catch (Resources.NotFoundException e) {
-            Log.e("MapsActivity", "Can't find style. Error: ", e);
-        }
-
-
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-
-            @Override
-            public void onLocationChanged(Location location) {
-                showFromDatabase();
-                //get initial latlng once map loads
-                //LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                //mGoogleMap.clear();
-                //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
-
-                // enable current location ellipse/marker
-                //mGoogleMap.setMyLocationEnabled(true);
-
-                //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
-
-                //call functions
-                //getCurrentLocation(location);
-                //getUserLocationUpdate(location);
-
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-            }
-        };
-
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 10, locationListener);
-        } else {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1340);
-        }
-
+        dbOut.flush();
+        dbOut.close();
     }
 
 }
