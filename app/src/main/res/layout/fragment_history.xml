@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
     <TableRow
         android:id="@+id/header_line"
@@ -11,6 +12,7 @@
         android:gravity="center"
         android:paddingTop="10dp"
         android:textColor="@color/white"
+        android:paddingBottom="10dp"
         android:stretchColumns="1,2,3">
 
         <TextView
@@ -44,8 +46,8 @@
             android:id="@+id/header_line_latitude"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:paddingStart="58dp"
-            android:paddingLeft="58dp"
+            android:paddingStart="57dp"
+            android:paddingLeft="57dp"
             android:paddingEnd="0dp"
             android:paddingRight="0dp"
             android:text="@string/Latitude"
@@ -57,8 +59,8 @@
             android:id="@+id/header_line_longitude"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="15dp"
-            android:paddingLeft="15dp"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
             android:paddingEnd="0dp"
             android:paddingRight="0dp"
             android:text="@string/Longitude"
@@ -76,4 +78,4 @@
         android:textColor="@color/white"/>
 
 
-</RelativeLayout>
+</LinearLayout>
