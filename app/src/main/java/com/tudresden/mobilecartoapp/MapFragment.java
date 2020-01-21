@@ -109,7 +109,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
             mGoogleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lng))
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_grey_02cm))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_grey))
                     .alpha(0.5f));
         }
 
