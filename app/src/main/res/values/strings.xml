@@ -9,13 +9,13 @@
     <string name="Map">Map</string>
     <string name="History">History</string>
     <string name="About">About</string>
-    <string name="AboutContent">Trace is a simple, fast, secure and free way to monitor your locations and show them by a heat map. You can restore a list of your precise coordinates in a separate page.
+    <string name="AboutContent">Trace is a simple, fast, secure and free way to monitor your locations and show them by a heat map. You can restore a list of your precise coordinates in a separate page.\n
 The App is designed by a group of Cartography students of Technical University of Dresden (TUD) as a class project in January 2020. \n\nGroup members are:\n\n
     Sebastian Hancock\n
     Valeria Shurupina\n
     Mostafa Kheyrollahi\n
     Shahtaj Ghufran\n\n
-    © 2020 HEATAPP, All Rights Reserved
+    © 2020 Trace, All Rights Reserved
 </string>
     <string name="Trace">Trace</string>
     <string name="MainIconLogo">Main icon/logo</string>
