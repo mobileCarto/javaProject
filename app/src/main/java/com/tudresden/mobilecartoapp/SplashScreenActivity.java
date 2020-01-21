@@ -8,7 +8,7 @@ public class SplashScreenActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
+        startActivity(new Intent(SplashScreenActivity.this, IntroActivity.class));
         finish();
     }
 }
