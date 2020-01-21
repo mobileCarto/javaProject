@@ -80,6 +80,46 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     List<Locations> locations_list;
     private GoogleMap mGoogleMap;
 
+    //Geocoder part
+
+    /* public void addAddressToDB() {
+        final File dbFile = getActivity().getDatabasePath(db_name);
+        if (!dbFile.exists()) {
+            try {
+                copyDatabaseFile(dbFile.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, db_name)
+                .allowMainThreadQueries()
+                .addMigrations(MIGRATION_1_2)
+                .build();
+        locationsdao = database.getLocationsDAO();
+        locations_list = locationsdao.getAllLocations();
+
+
+        Locations addAddress = new Locations();
+        for (int i = 0; i < locations_list.size(); i++) {
+
+            String lats = locations_list.get(i).getLatitude();
+            String lngs = locations_list.get(i).getLongitude();
+            String time = locations_list.get(i).getTime();
+            // shahtaj! String address = locations_list.get(i).setAddress();
+
+            //convert latlng to doubles
+            double lat = Double.parseDouble(lats);
+            double lng = Double.parseDouble(lngs);
+        //// geocoder
+
+
+            //addAddress.setAddress(addressString);
+
+        }
+
+
+    } */
+
 
     ////show from database
     public void showFromDatabase() {
@@ -105,7 +145,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         for (int i = 0; i < locations_list.size(); i++) {
             String lats = locations_list.get(i).getLatitude();
             String lngs = locations_list.get(i).getLongitude();
-            String time = locations_list.get(i).getTime();
+            //String time = locations_list.get(i).getTime();
+            // shahtaj! String address = locations_list.get(i).getAddress();
 
             //convert latlng to doubles
             double lat = Double.parseDouble(lats);
