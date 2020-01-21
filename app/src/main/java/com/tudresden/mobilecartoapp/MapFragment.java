@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -65,8 +66,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     LocationManager locationManager;
     LocationListener locationListener;
+    Location currentLoc;
     MapView mMapView;
     View mView;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private boolean mLocationPermissionGranted;
+
 
     /////////////////////database stuff///////////////
     //String db_name = "locations_db.sqlite";
@@ -74,6 +79,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     LocationsDAO locationsdao;
     List<Locations> locations_list;
     private GoogleMap mGoogleMap;
+
 
     ////show from database
     public void showFromDatabase() {
@@ -113,6 +119,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     .alpha(0.5f));
         }
 
+        //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLoc.getLatitude(),currentLoc.getLongitude()), 12));
+
         // Set gradient
         int[] colors = {
                 //Color.rgb(79, 195, 247), // blue
@@ -149,18 +157,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mOverlay = mGoogleMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
     }
 
-
-
-    //function to return current location
-    public LatLng getCurrentLocation(Location location) {
-        LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-        return myLatLng;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        //getLocationPermission();
     }
 
     @Nullable
@@ -188,11 +189,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
 
         mGoogleMap = googleMap;
-        MapsInitializer.initialize(getContext());
+        //MapsInitializer.initialize(getContext()); ///what is this
         //googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         showFromDatabase();
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.050704,13.737443),9));
-
+        //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.050704,13.737443),9));
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
@@ -208,14 +208,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
 
 
-       /* locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
 
             @Override
             public void onLocationChanged(Location location) {
 
+                currentLoc = location;
+
                 //get initial latlng once map loads
-                //LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+               // LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 //mGoogleMap.clear();
                 //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
 
@@ -227,7 +229,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 //call functions
                 //getCurrentLocation(location);
                 //getUserLocationUpdate(location);
-
 
             }
 
@@ -248,9 +249,61 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 10, locationListener);
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1340);
-        } */
+        }
 
     }
+
+
+    private void getLocationPermission() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        mLocationPermissionGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true;
+                }
+            }
+        }
+        updateLocationUI();
+    }
+
+
+    private void updateLocationUI() {
+        if (mGoogleMap == null) {
+            return;
+        }
+        try {
+            if (mLocationPermissionGranted) {
+                mGoogleMap.setMyLocationEnabled(true);
+            } else {
+                mGoogleMap.setMyLocationEnabled(false);
+            }
+        } catch (SecurityException e) {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
 
     //function to return current time
     public String getCurrentTime() {
