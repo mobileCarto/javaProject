@@ -17,8 +17,8 @@ The App is designed by a group of Cartography students of Technical University o
     Shahtaj Ghufran\n\n
     © 2020 HEATAPP, All Rights Reserved
 </string>
-    <string name="HeatApp">Trace</string>
+    <string name="Trace">Trace</string>
     <string name="MainIconLogo">Main icon/logo</string>
-    <string name="CollectYourPreviousLocations">Trace your footsteps</string>
+    <string name="Traceyour">Trace your footsteps</string>
     <string name="HistoryPart">History Part</string>
 </resources>
