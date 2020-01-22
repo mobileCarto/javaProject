@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -58,11 +57,6 @@ public class IntroActivity extends AppIntro {
         // Hide Skip/Done button.
         showSkipButton(true);
         setProgressButtonEnabled(true);
-
-        // Turn vibration on and set intensity.
-        // NOTE: you will probably need to ask VIBRATE permission in Manifest.
-        setVibrate(true);
-        setVibrateIntensity(30);
     }
 
     @Override
@@ -77,12 +71,5 @@ public class IntroActivity extends AppIntro {
         super.onDonePressed(currentFragment);
         // Do something when users tap on Done button.
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
-    }
-
-    @Override
-    public void onSlideChanged(Fragment oldFragment, Fragment newFragment) {
-        super.onSlideChanged(oldFragment, newFragment);
-        // Do something when the slide changes.
-        //finish();
     }
 }
