@@ -53,6 +53,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+
+
 import static com.tudresden.mobilecartoapp.AppDatabase.MIGRATION_1_2;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
@@ -69,6 +72,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     Location currentLoc;
     MapView mMapView;
     View mView;
+
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean mLocationPermissionGranted;
 
@@ -79,46 +83,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     LocationsDAO locationsdao;
     List<Locations> locations_list;
     private GoogleMap mGoogleMap;
-
-    //Geocoder part
-
-    /* public void addAddressToDB() {
-        final File dbFile = getActivity().getDatabasePath(db_name);
-        if (!dbFile.exists()) {
-            try {
-                copyDatabaseFile(dbFile.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, db_name)
-                .allowMainThreadQueries()
-                .addMigrations(MIGRATION_1_2)
-                .build();
-        locationsdao = database.getLocationsDAO();
-        locations_list = locationsdao.getAllLocations();
-
-
-        Locations addAddress = new Locations();
-        for (int i = 0; i < locations_list.size(); i++) {
-
-            String lats = locations_list.get(i).getLatitude();
-            String lngs = locations_list.get(i).getLongitude();
-            String time = locations_list.get(i).getTime();
-            // shahtaj! String address = locations_list.get(i).setAddress();
-
-            //convert latlng to doubles
-            double lat = Double.parseDouble(lats);
-            double lng = Double.parseDouble(lngs);
-        //// geocoder
-
-
-            //addAddress.setAddress(addressString);
-
-        }
-
-
-    } */
 
 
     ////show from database
@@ -210,6 +174,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
             container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_map, container, false);
+
+
+        // Construct a FusedLocationProviderClient.
+        //mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
         return mView;
 
     }
@@ -249,7 +218,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
 
 
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+    /*    locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
 
             @Override
@@ -290,17 +259,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 10, locationListener);
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1340);
-        }
+        } */
 
     }
 
 
-    private void getLocationPermission() {
+
+
+   /* private void getLocationPermission() {
         /*
          * Request location permission, so that we can get the location of the
          * device. The result of the permission request is handled by a callback,
          * onRequestPermissionsResult.
-         */
+
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -343,7 +314,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
-    }
+    } */
 
 
     //function to return current time
