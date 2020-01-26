@@ -3,6 +3,7 @@ package com.tudresden.mobilecartoapp;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -16,37 +17,31 @@ public class IntroActivity extends AppIntro {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Note here that we DO NOT use setContentView();
+        // Hide the status bar
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
 
-        // Add your slide fragments here.
-        // AppIntro will automatically generate the dots indicator and buttons.
-        //addSlide(firstFragment);
-        //addSlide(secondFragment);
-        //addSlide(thirdFragment);
-        //addSlide(fourthFragment);
-
-        // Instead of fragments, you can also use our default slide.
-        // Just create a `SliderPage` and provide title, description, background and image.
-        // AppIntro will do the rest.
+        // Slides
         SliderPage firstSliderPage = new SliderPage();
         firstSliderPage.setTitle("TRACE");
         firstSliderPage.setDescription("this is slide 1");
         firstSliderPage.setImageDrawable(R.drawable.logo_light);
-        firstSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide5));
+        firstSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide1));
         addSlide(AppIntroFragment.newInstance(firstSliderPage));
 
         SliderPage secondSliderPage = new SliderPage();
         secondSliderPage.setTitle("TRACE");
         secondSliderPage.setDescription("this is slide 2");
         secondSliderPage.setImageDrawable(R.drawable.globe);
-        secondSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide6));
+        secondSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide2));
         addSlide(AppIntroFragment.newInstance(secondSliderPage));
 
         SliderPage thirdSliderPage = new SliderPage();
         thirdSliderPage.setTitle("TRACE");
         thirdSliderPage.setDescription("this is slide 3");
         thirdSliderPage.setImageDrawable(R.drawable.map);
-        thirdSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide4));
+        thirdSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide3));
         addSlide(AppIntroFragment.newInstance(thirdSliderPage));
 
         // OPTIONAL METHODS
