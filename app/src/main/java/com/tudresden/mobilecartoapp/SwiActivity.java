@@ -5,10 +5,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-public class SwiActivity extends AppCompatActivity {
+public class SwiActivity extends MainActivity {
     private Switch myswitch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +26,12 @@ public class SwiActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    Log.d("test", "hi");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
                     restartApp();
                 } else {
+                    Log.d("test", "else");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     restartApp();
                 }
