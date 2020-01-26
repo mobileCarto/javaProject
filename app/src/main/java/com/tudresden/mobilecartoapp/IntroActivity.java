@@ -32,27 +32,27 @@ public class IntroActivity extends AppIntro {
         firstSliderPage.setTitle("TRACE");
         firstSliderPage.setDescription("this is slide 1");
         firstSliderPage.setImageDrawable(R.drawable.logo_light);
-        firstSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide1));
+        firstSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide5));
         addSlide(AppIntroFragment.newInstance(firstSliderPage));
 
         SliderPage secondSliderPage = new SliderPage();
         secondSliderPage.setTitle("TRACE");
         secondSliderPage.setDescription("this is slide 2");
-        secondSliderPage.setImageDrawable(R.drawable.logo_dark);
-        secondSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide2));
+        secondSliderPage.setImageDrawable(R.drawable.globe);
+        secondSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide6));
         addSlide(AppIntroFragment.newInstance(secondSliderPage));
 
         SliderPage thirdSliderPage = new SliderPage();
         thirdSliderPage.setTitle("TRACE");
         thirdSliderPage.setDescription("this is slide 3");
-        thirdSliderPage.setImageDrawable(R.drawable.logo_light);
-        thirdSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide3));
+        thirdSliderPage.setImageDrawable(R.drawable.map);
+        thirdSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide4));
         addSlide(AppIntroFragment.newInstance(thirdSliderPage));
 
         // OPTIONAL METHODS
         // Override bar/separator color.
-        setBarColor(Color.parseColor("#3F51B5"));
-        setSeparatorColor(Color.parseColor("#2196F3"));
+        setBarColor(Color.parseColor("#404040"));
+        setSeparatorColor(Color.parseColor("#606060"));
 
         // Hide Skip/Done button.
         showSkipButton(true);

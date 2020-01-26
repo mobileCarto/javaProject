@@ -8,4 +8,7 @@
     <color name="slide1">#6200EE</color>
     <color name="slide2">#3700B3</color>
     <color name="slide3">#03DAC5</color>
+    <color name="slide4">#f68838</color> <!-- bright orange-->
+    <color name="slide5">#fbb021</color>
+    <color name="slide6">#ff9800</color>
 </resources>
