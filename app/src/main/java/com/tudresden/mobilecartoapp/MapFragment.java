@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,28 +24,22 @@ import androidx.room.Room;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
-import com.google.android.gms.maps.model.MapStyleOptions;
-
-
-import java.text.SimpleDateFormat;
-
-import java.util.Calendar;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -164,26 +156,34 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         // Set gradient
         int[] colors = {
-                //Color.rgb(79, 195, 247), // blue
 
-                //Color.rgb(255,255,255), //white
-                //Color.rgb(240,255,80), //light yellow
-                Color.rgb(255, 253, 2), // yellow
-                Color.rgb(251, 176, 33), //dark yellow
-                Color.rgb(255, 152, 0), // orange
-                Color.rgb(246, 136, 56),//bright orange
-                //Color.rgb	(238,62,50), //bright red
-                Color.rgb(244, 67, 54)   // red
+//                // ORANGE COLOR SCHEME
+//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_1), // yellow
+//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_2), //dark yellow
+//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_3), // orange
+//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_4), //bright orange
+//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_5), // red
+
+                // WHITE - BLUE COLOR SCHEME
+                ContextCompat.getColor(getContext(), R.color.heatmap_blue_1), // light blue
+                ContextCompat.getColor(getContext(), R.color.heatmap_blue_2), //
+                ContextCompat.getColor(getContext(), R.color.heatmap_blue_3), //
+                ContextCompat.getColor(getContext(), R.color.heatmap_blue_4), // dark blue
         };
 
-        //starting point for colors
+//        //starting point for colors: ORANGE COLOR SCHEME
+//        float[] startPoints = {
+//                0.3f, 0.4f, 0.5f, 0.6f, 0.8f
+//        };
+
+        //starting point for colors: WHITE - BLUE COLOR SCHEME
         float[] startPoints = {
-                0.3f, 0.4f, 0.5f, 0.6f, 0.8f
+                0.3f, 0.5f, 0.6f, 0.8f
         };
 
         Gradient gradient = new Gradient(colors, startPoints);
 
-        // Create a heat map tile provider, passing it the latlngs of the police stations.
+        // Create a heat map tile provider, passing it the latlngs of the police stations
         int radius = (int) Math.floor(Math.pow(TILE_RADIUS_BASE, mRadiusZoom));
         mProvider = new HeatmapTileProvider.Builder()
                 .data(latLngMarkers)
@@ -194,7 +194,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         if (mOverlay != null) {
             mOverlay.clearTileCache();
         }
-        // Add a tile overlay to the map, using the heat map tile provider.
+        // Add a tile overlay to the map, using the heat map tile provider
         mOverlay = mGoogleMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
     }
 

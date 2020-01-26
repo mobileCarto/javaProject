@@ -1,8 +1,8 @@
 package com.tudresden.mobilecartoapp;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -16,18 +16,12 @@ public class IntroActivity extends AppIntro {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Note here that we DO NOT use setContentView();
+        // Hide the status bar
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
 
-        // Add your slide fragments here.
-        // AppIntro will automatically generate the dots indicator and buttons.
-        //addSlide(firstFragment);
-        //addSlide(secondFragment);
-        //addSlide(thirdFragment);
-        //addSlide(fourthFragment);
-
-        // Instead of fragments, you can also use our default slide.
-        // Just create a `SliderPage` and provide title, description, background and image.
-        // AppIntro will do the rest.
+        // Slides
         SliderPage firstSliderPage = new SliderPage();
         firstSliderPage.setTitle("TRACE");
         firstSliderPage.setDescription("this is slide 1");
@@ -49,11 +43,7 @@ public class IntroActivity extends AppIntro {
         thirdSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide3));
         addSlide(AppIntroFragment.newInstance(thirdSliderPage));
 
-        // OPTIONAL METHODS
-        // Override bar/separator color.
-        setBarColor(Color.parseColor("#3F51B5"));
-        setSeparatorColor(Color.parseColor("#2196F3"));
-
+        // METHODS
         // Hide Skip/Done button.
         showSkipButton(true);
         setProgressButtonEnabled(true);
