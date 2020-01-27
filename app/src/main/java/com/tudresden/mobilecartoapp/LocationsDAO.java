@@ -22,9 +22,6 @@ public interface LocationsDAO {
     @Query("SELECT * FROM locations_table")
     public List<Locations> getAllLocations();
 
-    @Query("SELECT * FROM locations_table WHERE id = :locations_id")
-    public List<Locations> getLocationsInfoByID(String locations_id);
-
 }
 
 

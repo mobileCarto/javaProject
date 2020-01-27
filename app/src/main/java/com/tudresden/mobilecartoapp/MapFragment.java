@@ -85,6 +85,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     ////show points from database
     public void showFromDatabase() {
 
+        //get database
         final File dbFile = getActivity().getDatabasePath(db_name);
         if (!dbFile.exists()) {
             try {
@@ -93,6 +94,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 e.printStackTrace();
             }
         }
+        //setup access for database
         AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, db_name)
                 .allowMainThreadQueries()
                 .addMigrations(MIGRATION_1_2)
@@ -161,7 +163,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
         // Add a tile overlay to the map, using the heat map tile provider
         mOverlay = mGoogleMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
-        getDeviceLocation();
     }
 
     @Override
@@ -236,6 +237,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         //function to show data points from database
         showFromDatabase();
+        getDeviceLocation();
 
     }
 
@@ -245,10 +247,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private void getDeviceLocation() {
         // log message in console to see function execution
         Log.d("userLocation", "getting user device location");
-
-        // use location services
-        //mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
-
+        
         try {
             // check if location is granted
             if (mLocationPermissionGranted) {
@@ -300,6 +299,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
+
         } else {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
@@ -322,7 +322,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
         }
     }
-
 
     //function to return current time
     public String getCurrentTime() {
@@ -371,5 +370,4 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         dbOut.flush();
         dbOut.close();
     }
-
 }
