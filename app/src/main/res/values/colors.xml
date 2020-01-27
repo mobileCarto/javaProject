@@ -6,9 +6,8 @@
     <color name="white">#ffffff</color>
     <color name="light_gray">#d3d3d3</color>
 
-    <color name="heatmap_orange_1">#fffd02</color>
+    <color name="heatmap_orange_1">#ffff00</color>
     <color name="heatmap_orange_2">#fbb021</color>
-    <color name="heatmap_orange_3">#ff9800</color>
-    <color name="heatmap_orange_4">#f68838</color>
-    <color name="heatmap_orange_5">#f44336</color>
+    <color name="heatmap_orange_3">#f68838</color>
+    <color name="heatmap_orange_4">#ff0000</color>
 </resources>
