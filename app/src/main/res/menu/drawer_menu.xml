@@ -20,10 +20,6 @@
             android:title="@string/About"
             android:textColor="@color/white"/>
 
-        <item android:id="@+id/nav_switch"
-            app:actionLayout="@layout/layout_switch"
-            android:title="Send"
-            android:icon="@drawable/ic_motorcycle"/>
     </group>
 
 
