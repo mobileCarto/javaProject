@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launchers"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--start with instructional swiping screens -->
         <activity android:name=".SplashScreenActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -23,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--main activity -->
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme">
@@ -39,6 +41,7 @@
         <uses-library android:name="org.apache.http.legacy"
             android:required="false"/>
 
+        <!--google maps key-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBLjO77p6OoolKV9dEdKcLUa0-DlTpX-4k" />

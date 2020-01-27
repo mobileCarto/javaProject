@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
+    <!--xml for drawer/sidebar navigation -->
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_map"
