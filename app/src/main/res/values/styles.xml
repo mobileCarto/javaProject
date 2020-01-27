@@ -10,21 +10,16 @@
         <item name="drawerArrowStyle">@style/DrawerHamburgerStyle</item>
     </style>
 
+    <!-- Navigation Header theme -->
     <style name="DrawerHamburgerStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@color/colorPrimaryDark</item>
     </style>
-
-    <!-- Base application theme -->
-<!--    <style name="AppTheme.NoActionBar">-->
-<!--        <item name="windowActionBar">false</item>-->
-<!--        <item name="windowNoTitle">true</item>-->
-<!--    </style>-->
 
     <!-- Splash theme -->
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
         <item name="android:windowBackground">@drawable/splash_screen_background</item>
     </style>
-    </resources>
+</resources>
 

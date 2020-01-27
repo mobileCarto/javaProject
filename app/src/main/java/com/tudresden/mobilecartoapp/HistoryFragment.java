@@ -36,6 +36,7 @@ public class HistoryFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_history, container, false);
 
+        // Check if the Database exists
         final File dbFile = getActivity().getDatabasePath(db_name);
             if (!dbFile.exists()) {
                 try {
@@ -45,14 +46,20 @@ public class HistoryFragment extends Fragment {
                 }
         }
 
+            // Connect to the Database
         AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, db_name)
                 .allowMainThreadQueries()
                 .addMigrations(MIGRATION_1_2)
                 .build();
 
+            ////Get locations from the Database and display in recycler viewer////
+            //Get locations from the Database
         locationsdao = database.getLocationsDAO();
         locations_list = locationsdao.getAllLocations();
+        // Display them in recycler list
+        //a Java object of the type RecyclerView and link it to the XML RecyclerView
         recyclerView = rootView.findViewById(R.id.recycler_list);
+        // LinearLayoutManager arranges the items in a one-dimensional list
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listAdapter = new ListAdapter(locations_list);
         recyclerView.setAdapter(listAdapter);

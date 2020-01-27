@@ -51,18 +51,17 @@ import java.util.Locale;
 import static com.tudresden.mobilecartoapp.AppDatabase.MIGRATION_1_2;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
+    
+    ///////////////////////heat map variables///////////////
 
-    ///////////////////////heatmap variables///////////////
     private static final double TILE_RADIUS_BASE = 1.47; // default
     private static final float BASE_ZOOM = 12.0f;
     private int mRadiusZoom = (int) BASE_ZOOM;
     private HeatmapTileProvider mProvider;
     private TileOverlay mOverlay;
 
-
     MapView mMapView;
     View mView;
-
 
     ///////////////////////user location variables///////////////
     private static final String KEY_CAMERA_POSITION = "camera_position";
@@ -73,13 +72,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private Location mLastKnownLocation;
     private CameraPosition mCameraPosition;
 
+    ////DATABASE////
+    // Working Database
+    //String db_name = "locations_db.sqlite";
 
-    ///////////////////////database variables///////////////
-    //String db_name = "locations_db.sqlite"; database to capture user location
-    String db_name = "test.sqlite"; //database for presentation
+    // Database for Presentation
+    String db_name = "test.sqlite";
+
+
     LocationsDAO locationsdao;
     List<Locations> locations_list;
     private GoogleMap mGoogleMap;
+
 
     ////show points from database
     public void showFromDatabase() {
@@ -104,12 +108,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //initiate empty list for all latlng points in database - needed for heatmap
         final List<LatLng> latLngMarkers = new ArrayList<>();
 
-        //loop through all locations in database
+        //Loop through all locations in database
         for (int i = 0; i < locations_list.size(); i++) {
             String lats = locations_list.get(i).getLatitude();
             String lngs = locations_list.get(i).getLongitude();
 
-            //convert latlng to doubles
+            //Convert latlng to doubles
             double lat = Double.parseDouble(lats);
             double lng = Double.parseDouble(lngs);
 
@@ -123,58 +127,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     .alpha(0.5f));
         }
 
-        // Set gradient
+        // Set gradient of the Heat map
         int[] colors = {
-                //Color.rgb(79, 195, 247), // blue
-
-                //Color.rgb(255,255,255), //white
-                //Color.rgb(240,255,80), //light yellow
-
-                //Color.rgb(255, 253, 2), // yellow
-
-                //Color.rgb(255, 152, 0), // orange
-
-                //Color.rgb	(238,62,50), //bright red
-                //Color.rgb(244, 67, 54)   // red
-
-                //Color.rgb(0,0,255), // blue
-                //Color.rgb(0,255,255), // cyan
-                //Color.rgb(50, 205, 50),//lime
-                Color.rgb(255,255,0),//yellow
-                Color.rgb(251, 176, 33), //dark yellow
-                Color.rgb(246, 136, 56),//bright orange
-                Color.rgb(255,0,0)//red
-
-
-//                // ORANGE COLOR SCHEME
-//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_1), // yellow
-//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_2), //dark yellow
-//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_3), // orange
-//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_4), //bright orange
-//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_5), // red
-
-                // WHITE - BLUE COLOR SCHEME
-               // ContextCompat.getColor(getContext(), R.color.heatmap_blue_1), // light blue
-                //ContextCompat.getColor(getContext(), R.color.heatmap_blue_2), //
-                //ContextCompat.getColor(getContext(), R.color.heatmap_blue_3), //
-                //ContextCompat.getColor(getContext(), R.color.heatmap_blue_4), // dark blue
+                // ORANGE COLOR SCHEME
+                ContextCompat.getColor(getContext(), R.color.heatmap_orange_1), // yellow
+                ContextCompat.getColor(getContext(), R.color.heatmap_orange_2), //dark yellow
+                ContextCompat.getColor(getContext(), R.color.heatmap_orange_3), //bright orange
+                ContextCompat.getColor(getContext(), R.color.heatmap_orange_4), // red
         };
 
-//        //starting point for colors: ORANGE COLOR SCHEME
-//        float[] startPoints = {
-//                0.3f, 0.4f, 0.5f, 0.6f, 0.8f
-//        };
-
-        //starting point for colors: WHITE - BLUE COLOR SCHEME
+        //Starting point for colors: ORANGE COLOR SCHEME
         float[] startPoints = {
-
                 0.4f, 0.5f, 0.7f, 1.0f
-
         };
 
         Gradient gradient = new Gradient(colors, startPoints);
 
-        // Create a heat map tile provider, passing it the latlngs of the police stations
+        // Create a Heat map tile provider, passing it the latlngs of markers
         int radius = (int) Math.floor(Math.pow(TILE_RADIUS_BASE, mRadiusZoom));
         mProvider = new HeatmapTileProvider.Builder()
                 .data(latLngMarkers)
@@ -185,7 +154,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         if (mOverlay != null) {
             mOverlay.clearTileCache();
         }
-        // Add a tile overlay to the map, using the heat map tile provider
+        // Add a tile overlay to the map, using the Heat map tile provider
         mOverlay = mGoogleMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
     }
 
@@ -268,7 +237,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private void getDeviceLocation() {
         // log message in console to see function execution
         Log.d("userLocation", "getting user device location");
-        
+
         try {
             // check if location is granted
             if (mLocationPermissionGranted) {
