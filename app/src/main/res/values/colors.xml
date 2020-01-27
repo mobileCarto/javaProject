@@ -5,9 +5,11 @@
     <color name="colorAccent">#000000</color>
     <color name="white">#ffffff</color>
     <color name="light_gray">#d3d3d3</color>
-    <color name="slide1">#7986cb</color>
-    <color name="slide2">#3949ab</color>
-    <color name="slide3">#303f9f</color>
+
+    <color name="slide1">#fffde7</color>
+    <color name="slide2">#fffde7</color>
+    <color name="slide3">#eceff1</color>
+    <color name="slide4">#fff3e0</color>
     <color name="heatmap_orange_1">#fffd02</color>
     <color name="heatmap_orange_2">#fbb021</color>
     <color name="heatmap_orange_3">#ff9800</color>
@@ -17,5 +19,6 @@
     <color name="heatmap_blue_2">#3949ab</color>
     <color name="heatmap_blue_3">#303f9f</color>
     <color name="heatmap_blue_4">#1a237e</color>
+
 
 </resources>
