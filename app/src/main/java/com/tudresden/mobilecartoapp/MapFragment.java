@@ -138,6 +138,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         //Starting point for colors: ORANGE COLOR SCHEME
         float[] startPoints = {
+
+                //setting the point from where each color begins
                 0.4f, 0.5f, 0.7f, 1.0f
         };
 

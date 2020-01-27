@@ -10,6 +10,7 @@ import java.util.List;
 
 @Dao
 public interface LocationsDAO {
+    ///functions for updating the database///
     @Insert
     public void insert(Locations locations);
 
