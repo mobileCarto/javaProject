@@ -168,17 +168,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                 //Color.rgb(255,255,255), //white
                 //Color.rgb(240,255,80), //light yellow
-                Color.rgb(255, 253, 2), // yellow
-                Color.rgb(251, 176, 33), //dark yellow
-                Color.rgb(255, 152, 0), // orange
-                Color.rgb(246, 136, 56),//bright orange
+
+                //Color.rgb(255, 253, 2), // yellow
+
+                //Color.rgb(255, 152, 0), // orange
+
                 //Color.rgb	(238,62,50), //bright red
-                Color.rgb(244, 67, 54)   // red
+                //Color.rgb(244, 67, 54)   // red
+
+                //Color.rgb(0,0,255), // blue
+                //Color.rgb(0,255,255), // cyan
+                //Color.rgb(50, 205, 50),//lime
+                Color.rgb(255,255,0),//yellow
+                Color.rgb(251, 176, 33), //dark yellow
+                Color.rgb(246, 136, 56),//bright orange
+                Color.rgb(255,0,0)//red
         };
 
         //starting point for colors
         float[] startPoints = {
-                0.3f, 0.4f, 0.5f, 0.6f, 0.8f
+                0.4f, 0.5f, 0.7f, 1.0f
         };
 
         Gradient gradient = new Gradient(colors, startPoints);
