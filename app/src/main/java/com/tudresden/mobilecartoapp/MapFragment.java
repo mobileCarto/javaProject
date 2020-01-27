@@ -1,18 +1,15 @@
 package com.tudresden.mobilecartoapp;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,16 +18,21 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 
@@ -56,13 +58,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private HeatmapTileProvider mProvider;
     private TileOverlay mOverlay;
 
-    LocationManager locationManager;
-    LocationListener locationListener;
-    Location currentLoc;
+
     MapView mMapView;
     View mView;
+
+
+    private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    //private static final String DEFAULT_ZOOM = "15";
+
     private boolean mLocationPermissionGranted;
+    private static final String KEY_LOCATION = "location";
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private Location mLastKnownLocation;
+    private CameraPosition mCameraPosition;
 
 
     /////////////////////database stuff///////////////
@@ -71,47 +80,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     LocationsDAO locationsdao;
     List<Locations> locations_list;
     private GoogleMap mGoogleMap;
-
-    //Geocoder part
-
-    /* public void addAddressToDB() {
-        final File dbFile = getActivity().getDatabasePath(db_name);
-        if (!dbFile.exists()) {
-            try {
-                copyDatabaseFile(dbFile.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, db_name)
-                .allowMainThreadQueries()
-                .addMigrations(MIGRATION_1_2)
-                .build();
-        locationsdao = database.getLocationsDAO();
-        locations_list = locationsdao.getAllLocations();
-
-
-        Locations addAddress = new Locations();
-        for (int i = 0; i < locations_list.size(); i++) {
-
-            String lats = locations_list.get(i).getLatitude();
-            String lngs = locations_list.get(i).getLongitude();
-            String time = locations_list.get(i).getTime();
-            // shahtaj! String address = locations_list.get(i).setAddress();
-
-            //convert latlng to doubles
-            double lat = Double.parseDouble(lats);
-            double lng = Double.parseDouble(lngs);
-        //// geocoder
-
-
-            //addAddress.setAddress(addressString);
-
-        }
-
-
-    } */
-
 
     ////show from database
     public void showFromDatabase() {
@@ -137,8 +105,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         for (int i = 0; i < locations_list.size(); i++) {
             String lats = locations_list.get(i).getLatitude();
             String lngs = locations_list.get(i).getLongitude();
-            //String time = locations_list.get(i).getTime();
-            // shahtaj! String address = locations_list.get(i).getAddress();
 
             //convert latlng to doubles
             double lat = Double.parseDouble(lats);
@@ -151,8 +117,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_grey))
                     .alpha(0.5f));
         }
-
-        //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLoc.getLatitude(),currentLoc.getLongitude()), 12));
 
         // Set gradient
         int[] colors = {
@@ -196,13 +160,30 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
         // Add a tile overlay to the map, using the heat map tile provider
         mOverlay = mGoogleMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
+        getDeviceLocation();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        //getLocationPermission();
+        if (savedInstanceState != null) {
+            mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+        }
+
+        // Construct a FusedLocationProviderClient.
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (mGoogleMap != null) {
+            outState.putParcelable(KEY_CAMERA_POSITION, mGoogleMap.getCameraPosition());
+            outState.putParcelable(KEY_LOCATION, mLastKnownLocation);
+            super.onSaveInstanceState(outState);
+        }
     }
 
     @Nullable
@@ -210,6 +191,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
             container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_map, container, false);
+
         return mView;
 
     }
@@ -230,10 +212,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
 
         mGoogleMap = googleMap;
-        //MapsInitializer.initialize(getContext()); ///what is this
-        //googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        showFromDatabase();
-        //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.050704,13.737443),9));
+
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
@@ -249,58 +228,73 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
 
 
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
+        //MapsInitializer.initialize(getContext()); ///what is this
 
-            @Override
-            public void onLocationChanged(Location location) {
-
-                currentLoc = location;
-
-                //get initial latlng once map loads
-               // LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                //mGoogleMap.clear();
-                //mGoogleMap.addMarker(new MarkerOptions().position(myLatLng).title("your loc"));
-
-                // enable current location ellipse/marker
-                //mGoogleMap.setMyLocationEnabled(true);
-
-                //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
-
-                //call functions
-                //getCurrentLocation(location);
-                //getUserLocationUpdate(location);
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-            }
-        };
-
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 10, locationListener);
-        } else {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1340);
-        }
+        //call permissions to get location
+        getLocationPermission();
+        //show data points from database
+        showFromDatabase();
+        //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.050704,13.737443),9));
 
     }
 
+
+    //gets users locations and sends it to getUserLocationUpdate() function to update database
+    //gets users location to zoom to it to start
+    private void getDeviceLocation() {
+        // log message in console to see function execution
+        Log.d("userLocation", "getting user device location");
+
+        // use location services
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+
+        try {
+            // check if location is granted
+            if (mLocationPermissionGranted) {
+                // get user's last location of object type Task
+                Task location = mFusedLocationProviderClient.getLastLocation();
+
+                // listen for users location
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(Task task) {
+                        if (task.isSuccessful()) {
+                            // log current location success
+                            Log.d("seb", "onComplete: got your location!");
+                            // get result of current location
+                            Location currentLocation = (Location) task.getResult();
+                            mLastKnownLocation = (Location) task.getResult();
+
+                            // instantiate new latlng and move camera
+                            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 12));
+
+                            //getUserLocationUpdate(currentLocation);
+
+                        } else {
+                            // log
+                            Log.d("seb", "onComplete: Can't find you");
+                            // display current location error as toast message
+                            Toast.makeText(getContext(), "Unable to get current location", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
+                });
+
+            }
+
+        } catch (SecurityException e) {
+            // log error to console
+            Log.d("securityError", "Getting device location security message" + e.getMessage());
+        }
+
+    }
 
     private void getLocationPermission() {
         /*
          * Request location permission, so that we can get the location of the
          * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
+         * onRequestPermissionsResult. */
+
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -326,23 +320,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         }
-        updateLocationUI();
-    }
-
-
-    private void updateLocationUI() {
-        if (mGoogleMap == null) {
-            return;
-        }
-        try {
-            if (mLocationPermissionGranted) {
-                mGoogleMap.setMyLocationEnabled(true);
-            } else {
-                mGoogleMap.setMyLocationEnabled(false);
-            }
-        } catch (SecurityException e) {
-            Log.e("Exception: %s", e.getMessage());
-        }
     }
 
 
@@ -357,7 +334,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void getUserLocationUpdate(final Location location) {
         final Handler handler = new Handler();
 
-        ////change this to change the time interval ////////////////////////
         final int timeInterval = 600000; //10 min in milliseconds = 600000
 
         handler.postDelayed(new Runnable() {
@@ -369,12 +345,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
 
                 //insert lat lng
-                Locations seb = new Locations();
+                Locations currentLocationInsert = new Locations();
 
-                seb.setTime(getCurrentTime());
-                seb.setLatitude(lat);
-                seb.setLongitude(lng);
-                locationsdao.insert(seb);
+                currentLocationInsert.setTime(getCurrentTime());
+                currentLocationInsert.setLatitude(lat);
+                currentLocationInsert.setLongitude(lng);
+                locationsdao.insert(currentLocationInsert);
                 handler.postDelayed(this, timeInterval);
 
             }
