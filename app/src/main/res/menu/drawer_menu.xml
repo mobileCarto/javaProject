@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
@@ -19,5 +19,12 @@
             android:icon="@drawable/ic_about"
             android:title="@string/About"
             android:textColor="@color/white"/>
+
+        <item android:id="@+id/nav_switch"
+            app:actionLayout="@layout/layout_switch"
+            android:title="Send"
+            android:icon="@drawable/ic_motorcycle"/>
     </group>
+
+
 </menu>
