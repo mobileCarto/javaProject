@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+// Adapter feeds all our data to the list and extends the RecyclerView.Adapter class
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private List<Locations> values;
 

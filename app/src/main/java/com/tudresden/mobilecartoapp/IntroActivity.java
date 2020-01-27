@@ -22,7 +22,7 @@ public class IntroActivity extends AppIntro {
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
-        // Slides
+        // Creating 4 Intro Slides
         SliderPage firstSliderPage = new SliderPage();
         firstSliderPage.setTitle("\n WELCOME \n TO \n TRACE");
         firstSliderPage.setDescription("TRACE your footsteps \n wherever you go");
