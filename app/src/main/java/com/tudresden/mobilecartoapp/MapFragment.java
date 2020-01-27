@@ -2,6 +2,7 @@ package com.tudresden.mobilecartoapp;
 
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -66,8 +67,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     ///////////////////////user location variables///////////////
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    //private static final String DEFAULT_ZOOM = "15";
-
     private boolean mLocationPermissionGranted;
     private static final String KEY_LOCATION = "location";
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -102,6 +101,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         locationsdao = database.getLocationsDAO();
         locations_list = locationsdao.getAllLocations();
 
+        //initiate empty list for all latlng points in database - needed for heatmap
         final List<LatLng> latLngMarkers = new ArrayList<>();
 
         //loop through all locations in database
@@ -113,8 +113,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             double lat = Double.parseDouble(lats);
             double lng = Double.parseDouble(lngs);
 
+            //add latlng points to list for heatmap
             latLngMarkers.add(new LatLng(lat, lng));
 
+            //add marker for each
             mGoogleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lng))
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_grey))
@@ -254,9 +256,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         //MapsInitializer.initialize(getContext()); ///what is this
 
-        //call permissions to get location
-        //getLocationPermission();
-
         //function to show data points from database
         showFromDatabase();
         getDeviceLocation();
@@ -288,6 +287,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             // get result of current location
                             Location currentLocation = (Location) task.getResult();
                             mLastKnownLocation = (Location) task.getResult();
+                            mGoogleMap.setMyLocationEnabled(true);
+
 
                             //move camera to users location
                             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 12));
@@ -328,6 +329,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
