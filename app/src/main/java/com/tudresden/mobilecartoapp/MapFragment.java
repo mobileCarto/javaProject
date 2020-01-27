@@ -51,7 +51,7 @@ import static com.tudresden.mobilecartoapp.AppDatabase.MIGRATION_1_2;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    ///////////////////////heatmap stuff///////////////
+    ///////////////////////heatmap variables///////////////
     private static final double TILE_RADIUS_BASE = 1.47; // default
     private static final float BASE_ZOOM = 12.0f;
     private int mRadiusZoom = (int) BASE_ZOOM;
@@ -63,6 +63,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     View mView;
 
 
+    ///////////////////////user location variables///////////////
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     //private static final String DEFAULT_ZOOM = "15";
@@ -74,14 +75,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private CameraPosition mCameraPosition;
 
 
-    /////////////////////database stuff///////////////
-    //String db_name = "locations_db.sqlite";
-    String db_name = "test.sqlite";
+    ///////////////////////database variables///////////////
+    //String db_name = "locations_db.sqlite"; database to capture user location
+    String db_name = "test.sqlite"; //database for presentation
     LocationsDAO locationsdao;
     List<Locations> locations_list;
     private GoogleMap mGoogleMap;
 
-    ////show from database
+    ////show points from database
     public void showFromDatabase() {
 
         final File dbFile = getActivity().getDatabasePath(db_name);
@@ -232,21 +233,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         //call permissions to get location
         getLocationPermission();
-        //show data points from database
+        //function to show data points from database
         showFromDatabase();
-        //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.050704,13.737443),9));
 
     }
 
 
-    //gets users locations and sends it to getUserLocationUpdate() function to update database
-    //gets users location to zoom to it to start
+    /*gets users locations and sends it to getUserLocationUpdate() function to update database,
+     zooms to user location to start */
     private void getDeviceLocation() {
         // log message in console to see function execution
         Log.d("userLocation", "getting user device location");
 
         // use location services
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+        //mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
 
         try {
             // check if location is granted
@@ -261,13 +261,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         if (task.isSuccessful()) {
                             // log current location success
                             Log.d("seb", "onComplete: got your location!");
+
                             // get result of current location
                             Location currentLocation = (Location) task.getResult();
                             mLastKnownLocation = (Location) task.getResult();
 
-                            // instantiate new latlng and move camera
+                            //move camera to users location
                             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 12));
 
+                            //uncomment for using the app - sends location to function to save to database every 10 minutes
                             //getUserLocationUpdate(currentLocation);
 
                         } else {
@@ -289,11 +291,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+    //check permissions for location
     private void getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult. */
 
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -330,7 +329,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         return currentDateAndTime;
     }
 
-    /////Timer - gets user latlng and updates
+    //adds current location of user to the database every 10 minutes
     public void getUserLocationUpdate(final Location location) {
         final Handler handler = new Handler();
 
@@ -358,6 +357,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+    //helper function to copy database file
     private void copyDatabaseFile(String destinationPath) throws IOException {
         InputStream assetsDB = getActivity().getAssets().open(db_name);
         OutputStream dbOut = new FileOutputStream(destinationPath);
