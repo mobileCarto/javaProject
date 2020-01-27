@@ -166,7 +166,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
+        getLocationPermission();
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
@@ -232,7 +232,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //MapsInitializer.initialize(getContext()); ///what is this
 
         //call permissions to get location
-        getLocationPermission();
+        //getLocationPermission();
+
         //function to show data points from database
         showFromDatabase();
 
@@ -259,6 +260,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onComplete(Task task) {
                         if (task.isSuccessful()) {
+
                             // log current location success
                             Log.d("seb", "onComplete: got your location!");
 
