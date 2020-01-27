@@ -2,7 +2,6 @@ package com.tudresden.mobilecartoapp;
 
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -224,9 +223,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             Log.e("MapsActivity", "Can't find style. Error: ", e);
         }
 
-
-        //MapsInitializer.initialize(getContext()); ///what is this
-
         //function to show data points from database
         showFromDatabase();
         getDeviceLocation();
@@ -264,7 +260,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             //move camera to users location
                             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 12));
 
-                            //uncomment for using the app - sends location to function to save to database every 10 minutes
+                            //uncomment for using the app -
+                            // sends location to function to save to database every 10 minutes
                             //getUserLocationUpdate(currentLocation);
 
                         } else {
@@ -301,7 +298,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
@@ -313,6 +309,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mLocationPermissionGranted = true;
+                    getDeviceLocation();
                 }
             }
         }
@@ -326,6 +323,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     //adds current location of user to the database every 10 minutes
+    //commented out for presentation
     public void getUserLocationUpdate(final Location location) {
         final Handler handler = new Handler();
 
@@ -334,18 +332,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         handler.postDelayed(new Runnable() {
             public void run() {
 
+                //get current location
                 LatLng myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 String lat = String.valueOf(location.getLatitude());
                 String lng = String.valueOf(location.getLongitude());
-                mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12));
 
-                //insert lat lng
+                //insert current lat lng to database
                 Locations currentLocationInsert = new Locations();
 
                 currentLocationInsert.setTime(getCurrentTime());
                 currentLocationInsert.setLatitude(lat);
                 currentLocationInsert.setLongitude(lng);
                 locationsdao.insert(currentLocationInsert);
+                //function to run it every 10 minutes
                 handler.postDelayed(this, timeInterval);
 
             }

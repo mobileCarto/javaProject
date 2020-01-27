@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+    <!--layout for header part of the drawer menu -->
     <ImageView
         android:layout_width="115dp"
         android:layout_height="92dp"
