@@ -33,14 +33,14 @@ public class IntroActivity extends AppIntro {
         SliderPage secondSliderPage = new SliderPage();
         secondSliderPage.setTitle("TRACE");
         secondSliderPage.setDescription("this is slide 2");
-        secondSliderPage.setImageDrawable(R.drawable.globe);
+        secondSliderPage.setImageDrawable(R.drawable.globe2);
         secondSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide2));
         addSlide(AppIntroFragment.newInstance(secondSliderPage));
 
         SliderPage thirdSliderPage = new SliderPage();
         thirdSliderPage.setTitle("TRACE");
         thirdSliderPage.setDescription("this is slide 3");
-        thirdSliderPage.setImageDrawable(R.drawable.map);
+        thirdSliderPage.setImageDrawable(R.drawable.map2);
         thirdSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide3));
         addSlide(AppIntroFragment.newInstance(thirdSliderPage));
 
