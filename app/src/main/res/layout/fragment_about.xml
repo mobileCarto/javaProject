@@ -7,7 +7,7 @@
     android:background="@color/colorPrimary"
     tools:context=".AboutFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Defines the layout of the text view in the about fragment, text placement, size and color of elements-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

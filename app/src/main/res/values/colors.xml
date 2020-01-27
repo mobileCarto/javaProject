@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App theme colors -->
     <color name="colorPrimary">#606060</color>
     <color name="colorPrimaryDark">#404040</color>
     <color name="colorAccent">#202020</color>
     <color name="white">#ffffff</color>
     <color name="light_gray">#d3d3d3</color>
-
+    <!-- Heat map colors -->
     <color name="heatmap_orange_1">#ffff00</color>
     <color name="heatmap_orange_2">#fbb021</color>
     <color name="heatmap_orange_3">#f68838</color>

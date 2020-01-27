@@ -6,7 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "locations_table")
-//@Entity(tableName = "locations")
+/////defintion of variables for table fields//////
 public class Locations {
     @PrimaryKey
     @NonNull
@@ -22,6 +22,8 @@ public class Locations {
     @ColumnInfo(name = "longitude")
     public String Longitude;
 
+
+    //////definition of functions to return fields on request//////
     public Integer getID() {
         return ID;
     }

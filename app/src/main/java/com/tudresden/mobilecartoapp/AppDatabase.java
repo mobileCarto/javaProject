@@ -4,7 +4,7 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-
+//connects the database with the app
 @Database(entities = {Locations.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract LocationsDAO getLocationsDAO();
