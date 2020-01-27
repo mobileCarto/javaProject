@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -26,40 +24,40 @@ public class IntroActivity extends AppIntro {
 
         // Slides
         SliderPage firstSliderPage = new SliderPage();
-        firstSliderPage.setTitle("\n \n WELCOME \n TO \n TRACE");
-        firstSliderPage.setDescription("this is slide 1");
-        firstSliderPage.setImageDrawable(R.drawable.logo_light);
-        firstSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide1));
+        firstSliderPage.setTitle("\n WELCOME \n TO \n TRACE");
+        firstSliderPage.setDescription("TRACE your footsteps \n wherever you go");
+        firstSliderPage.setImageDrawable(R.drawable.logo_tr);
+        firstSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
         addSlide(AppIntroFragment.newInstance(firstSliderPage));
 
         SliderPage secondSliderPage = new SliderPage();
-        secondSliderPage.setTitle("wow");
-        secondSliderPage.setDescription("To begin, \n open the app");
-        secondSliderPage.setImageDrawable(R.drawable.globe2);
-        secondSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide2));
+        secondSliderPage.setTitle("Let it TRACE you \n on the go");
+        secondSliderPage.setDescription("To begin, open the app \n and it will start recording \n your current location");
+        secondSliderPage.setImageDrawable(R.drawable.globe);
+        secondSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
         addSlide(AppIntroFragment.newInstance(secondSliderPage));
 
         SliderPage thirdSliderPage = new SliderPage();
-        thirdSliderPage.setTitle("Heatmap");
-        thirdSliderPage.setDescription("this is slide 3");
-        thirdSliderPage.setImageDrawable(R.drawable.map2);
-        thirdSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide3));
+        thirdSliderPage.setTitle("Your personal \n Heat map");
+        thirdSliderPage.setDescription("View all the places \n you have been to with TRACE \n as a density map");
+        thirdSliderPage.setImageDrawable(R.drawable.map);
+        thirdSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
         addSlide(AppIntroFragment.newInstance(thirdSliderPage));
 
         SliderPage forthSliderPage = new SliderPage();
-        forthSliderPage.setTitle("TRACE");
+        forthSliderPage.setTitle("LET'S GO");
         forthSliderPage.setDescription("GET STARTED");
-        forthSliderPage.setImageDrawable(R.drawable.plane2);
-        forthSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide4));
+        forthSliderPage.setImageDrawable(R.drawable.plane);
+        forthSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
         addSlide(AppIntroFragment.newInstance(forthSliderPage));
 
         //Slide animation
         setZoomAnimation();
 
-        // OPTIONAL METHODS
+        // METHODS
         // Override bar/separator color.
-        setBarColor(Color.parseColor("#404040"));
-        setSeparatorColor(Color.parseColor("#606060"));
+        setBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+        setSeparatorColor(ContextCompat.getColor(getApplicationContext(), R.color.light_gray));
 
         // Hide Skip/Done button.
         showSkipButton(true);

@@ -49,7 +49,8 @@ import static com.tudresden.mobilecartoapp.AppDatabase.MIGRATION_1_2;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    ///////////////////////heatmap stuff///////////////
+    ////HEAT MAP////
+    //Setting for tile
     private static final double TILE_RADIUS_BASE = 1.47; // default
     private static final float BASE_ZOOM = 12.0f;
     private int mRadiusZoom = (int) BASE_ZOOM;
@@ -65,9 +66,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private boolean mLocationPermissionGranted;
 
 
-    /////////////////////database stuff///////////////
+    ////DATABASE////
+    // Working Database
     //String db_name = "locations_db.sqlite";
+
+    // Database for Presentation
     String db_name = "test.sqlite";
+
     LocationsDAO locationsdao;
     List<Locations> locations_list;
     private GoogleMap mGoogleMap;
@@ -113,7 +118,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     } */
 
 
-    ////show from database
+    //Display from Database
     public void showFromDatabase() {
 
         final File dbFile = getActivity().getDatabasePath(db_name);
@@ -133,14 +138,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         final List<LatLng> latLngMarkers = new ArrayList<>();
 
-        //loop through all locations in database
+        //Loop through all locations in database
         for (int i = 0; i < locations_list.size(); i++) {
             String lats = locations_list.get(i).getLatitude();
             String lngs = locations_list.get(i).getLongitude();
             //String time = locations_list.get(i).getTime();
             // shahtaj! String address = locations_list.get(i).getAddress();
 
-            //convert latlng to doubles
+            //Convert latlng to doubles
             double lat = Double.parseDouble(lats);
             double lng = Double.parseDouble(lngs);
 
@@ -154,36 +159,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLoc.getLatitude(),currentLoc.getLongitude()), 12));
 
-        // Set gradient
+        // Set gradient of the Heat map
         int[] colors = {
-
-//                // ORANGE COLOR SCHEME
-//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_1), // yellow
-//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_2), //dark yellow
-//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_3), // orange
-//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_4), //bright orange
-//                ContextCompat.getColor(getContext(), R.color.heatmap_orange_5), // red
-
-                // WHITE - BLUE COLOR SCHEME
-                ContextCompat.getColor(getContext(), R.color.heatmap_blue_1), // light blue
-                ContextCompat.getColor(getContext(), R.color.heatmap_blue_2), //
-                ContextCompat.getColor(getContext(), R.color.heatmap_blue_3), //
-                ContextCompat.getColor(getContext(), R.color.heatmap_blue_4), // dark blue
+                // ORANGE COLOR SCHEME
+                ContextCompat.getColor(getContext(), R.color.heatmap_orange_1), // yellow
+                ContextCompat.getColor(getContext(), R.color.heatmap_orange_2), //dark yellow
+                ContextCompat.getColor(getContext(), R.color.heatmap_orange_3), // orange
+                ContextCompat.getColor(getContext(), R.color.heatmap_orange_4), //bright orange
+                ContextCompat.getColor(getContext(), R.color.heatmap_orange_5), // red
         };
 
-//        //starting point for colors: ORANGE COLOR SCHEME
-//        float[] startPoints = {
-//                0.3f, 0.4f, 0.5f, 0.6f, 0.8f
-//        };
-
-        //starting point for colors: WHITE - BLUE COLOR SCHEME
+        //Starting point for colors: ORANGE COLOR SCHEME
         float[] startPoints = {
-                0.3f, 0.5f, 0.6f, 0.8f
+                0.3f, 0.4f, 0.5f, 0.6f, 0.8f
         };
 
         Gradient gradient = new Gradient(colors, startPoints);
 
-        // Create a heat map tile provider, passing it the latlngs of the police stations
+        // Create a Heat map tile provider, passing it the latlngs of markers
         int radius = (int) Math.floor(Math.pow(TILE_RADIUS_BASE, mRadiusZoom));
         mProvider = new HeatmapTileProvider.Builder()
                 .data(latLngMarkers)
@@ -194,7 +187,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         if (mOverlay != null) {
             mOverlay.clearTileCache();
         }
-        // Add a tile overlay to the map, using the heat map tile provider
+        // Add a tile overlay to the map, using the Heat map tile provider
         mOverlay = mGoogleMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
     }
 

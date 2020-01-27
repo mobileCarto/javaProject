@@ -5,6 +5,7 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
+    <!-- Headers for the table -->
     <TableRow
         android:id="@+id/header_line"
         android:layout_width="fill_parent"
@@ -62,6 +63,7 @@
             android:textStyle="bold" />
     </TableRow>
 
+    <!-- RecyclerView element which is going to display a list-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_list"
         android:layout_width="match_parent"
