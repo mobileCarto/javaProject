@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -50,6 +52,9 @@ public class IntroActivity extends AppIntro {
         forthSliderPage.setImageDrawable(R.drawable.plane2);
         forthSliderPage.setBgColor(ContextCompat.getColor(getApplicationContext(), R.color.slide4));
         addSlide(AppIntroFragment.newInstance(forthSliderPage));
+
+        //Slide animation
+        setZoomAnimation();
 
         // OPTIONAL METHODS
         // Override bar/separator color.
